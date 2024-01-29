@@ -51,8 +51,8 @@
             <span>Categories</span>
           </a>
         </li>
-        <li class="sidebar-item">
-          <a href="" class='sidebar-link'>
+        <li class="sidebar-item {{ request()->routeIs('produk.index') ? 'active' : '' }}">
+          <a href="{{ route('produk.index') }}" class='sidebar-link'>
             <i class="bi bi-boxes"></i>
             <span>Products</span>
           </a>
@@ -63,28 +63,46 @@
             <span>Chasiers</span>
           </a>
         </li>
-        <li class="sidebar-item">
-          <a href="" class='sidebar-link'>
+        <li class="sidebar-item sidebar-item {{ request()->routeIs('pembelian.index','pembelian_detail.index') ? 'active' : '' }}">
+          <a href="{{ route('pembelian.index') }}" class='sidebar-link'>
             <i class="bi bi-cart"></i>
             <span>Pembelian</span>
           </a>
         </li>
-        <li class="sidebar-item">
-          <a href="" class='sidebar-link'>
+        <li class="sidebar-item {{ request()->routeIs('penjualan.index') ? 'active' : '' }}">
+          <a href="{{ route('penjualan.index') }}" class='sidebar-link'>
             <i class="bi bi-cart-check"></i>
             <span>Penjualan</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="" class='sidebar-link'>
+          <a href="{{ route('transaksi.index') }}" class='sidebar-link'>
+            <i class="bi bi-cart"></i>
+            <span>Transaksi Lama</span>
+          </a>
+        </li>
+        <li class="sidebar-item {{ request()->routeIs('transaksi.index') ? 'active' : '' }}">
+          <a href="{{ route('transaksi.baru') }}" class='sidebar-link'>
+            <i class="bi bi-cart"></i>
+            <span>Transaksi Baru</span>
+          </a>
+        </li>
+        <li class="sidebar-item {{ request()->routeIs('member.index') ? 'active' : '' }}">
+          <a href="{{ route('member.index') }}" class='sidebar-link'>
             <i class="bi bi-credit-card"></i>
             <span>Member</span>
           </a>
         </li>
-        <li class="sidebar-item">
-          <a href="" class='sidebar-link'>
+        <li class="sidebar-item {{ request()->routeIs('supplier.index') ? 'active' : '' }}">
+          <a href="{{ route('supplier.index') }}" class='sidebar-link'>
             <i class="bi bi-truck"></i>
             <span>Supplier</span>
+          </a>
+        </li>
+        <li class="sidebar-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
+          <a href="{{ route('laporan.index') }}" class='sidebar-link'>
+            <i class="bi bi-clipboard-data"></i>
+            <span>Report</span>
           </a>
         </li>
         <li class="sidebar-item">

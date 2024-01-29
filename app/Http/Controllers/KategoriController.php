@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kategori;
+use Yajra\DataTables\DataTables;
 use App\DataTables\KategoriDataTable;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
@@ -23,27 +24,30 @@ class KategoriController extends Controller
             // Add more items as needed
         ];
         $data['page_title'] = 'Manage Categories';
-        return view('admin.category.index',$data);
+        return view('admin.category.index', $data);
     }
 
-    public function data()
-    {
-        $kategori = Kategori::orderBy('id_kategori', 'desc')->get();
+    // public function data()
+    // {
+    //     $kategori = Kategori::orderBy('id_kategori', 'desc')->get();
+    //     return DataTables::of($kategori)
+    //         ->addIndexColumn()
+    //         ->addColumn('aksi', function ($kategori) {
+    //             return '
+    //                 <div class="btn-group">
+    //                     <button onclick="editForm(`' . route('kategori.update', $kategori->id_kategori) . '`)" class="btn btn-xs btn-info btn-flat">
+    //                         <i class="bi bi-pencil-square text-white"></i>
+    //                     </button>
+    //                     <button onclick="deleteData(`' . route('kategori.destroy', $kategori->id_kategori) . '`)" class="btn btn-xs btn-danger btn-flat">
+    //                         <i class="bi bi-trash"></i>
+    //                     </button>
+    //                 </div>
+    //             ';
+    //         })
+    //         ->toJson(); // Ensure that the response is in JSON format
+    // }
 
-        return datatables()
-            ->of($kategori)
-            ->addIndexColumn()
-            ->addColumn('aksi', function ($kategori) {
-                return '
-                <div class="btn-group">
-                    <button onclick="editForm(`'. route('kategori.update', $kategori->id_kategori) .'`)" class="btn btn-xs btn-info btn-flat"></button>
-                    <button onclick="deleteData(`'. route('kategori.destroy', $kategori->id_kategori) .'`)" class="btn btn-xs btn-danger btn-flat"></button>
-                </div>
-                ';
-            })
-            ->rawColumns(['aksi'])
-            ->make(true);
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -76,10 +80,32 @@ class KategoriController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function data()
+    {
+        $kategori = Kategori::orderBy('id_kategori', 'desc')->get();
+
+        return datatables()
+            ->of($kategori)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($kategori) {
+                return '
+                   <div class="btn-group">
+                       <button onclick="editForm(`' . route('kategori.update', $kategori->id_kategori) . '`)" class="btn btn-xs btn-info btn-flat">
+                           <i class="bi bi-pencil-square text-white"></i>
+                       </button>
+                       <button onclick="deleteData(`' . route('kategori.destroy', $kategori->id_kategori) . '`)" class="btn btn-xs btn-danger btn-flat">
+                           <i class="bi bi-trash"></i>
+                       </button>
+                   </div>
+               ';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
+    }
     public function show($id)
     {
         $kategori = Kategori::find($id);
-        return response()->json($kategori);
+        return response($kategori);
     }
 
     /**

@@ -1,0 +1,24 @@
+.tampil-bayar {
+    font-size: 2em;
+    color: #fff;
+    text-align: center;
+    height: 50px;
+}
+
+.tampil-terbilang {
+    padding: 10px;
+    text-align: center;
+    background: #f0f0f0;
+}
+
+/* .table-pembelian tbody tr:last-child {
+  display: none;
+} */
+
+@media (max-width: 768px) {
+    .tampil-bayar {
+        font-size: 3em;
+        height: 70px;
+        padding-top: 5px;
+    }
+}
