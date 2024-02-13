@@ -14,10 +14,10 @@ class PembelianDetailController extends Controller
     {
         $data['breadcrumb_items'] = [
             ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/products', 'label' => 'Products'],
+            ['link' => '/pembelian', 'label' => 'Pembelian'],
             // Add more items as needed
         ];
-        $data['page_title'] = 'Manage Member';
+        $data['page_title'] = 'Pembelian Detail';
         $id_pembelian = session('id_pembelian');
         $produk = Produk::orderBy('nama_produk')->get();
         $supplier = Supplier::find(session('id_supplier'));

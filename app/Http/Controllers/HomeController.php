@@ -38,7 +38,7 @@ class HomeController extends Controller
             ['link' => '/dashboard', 'label' => 'Dashboard'],
             // Add more items as needed
         ];
-        $data['page_title'] = 'Manage Categories';
+        $data['page_title'] = 'Dashboard';
         return view('admin.index',$data);
     }
 

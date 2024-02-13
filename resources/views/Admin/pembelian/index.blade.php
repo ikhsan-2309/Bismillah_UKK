@@ -1,43 +1,75 @@
 @extends('admin.layouts.app')
 
 @section('content')
-  <section class="section">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="card-title">
-          List Pembelian
-          <button class="btn btn-outline-primary float-end m-2 mt-0" onclick="addForm()">+ Transaction</button>
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title mb-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title me-auto">List Categories</h4>
+        <div class="d-flex">
           @empty(!session('id_pembelian'))
-            <a href="{{ route('pembelian_detail.index') }}" class="btn btn-outline-primary float-end"><i
-                class="fa fa-pencil"></i>
-              Transaksi Aktif</a>
+            <a href="{{ route('pembelian_detail.index') }}"" class="btn btn-success btn-icon-text btn-sm m-2">
+              <i class="fa-solid fa-history btn-icon-prepend"></i>
+              Last Transaction
+            </a>
           @endempty
-        </h5>
-        <div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table-pembelian" id="table-pembelian">
-                <thead>
-                  <th width="5%">No</th>
-                  <th>Tanggal</th>
-                  <th>Supplier</th>
-                  <th>Total Item</th>
-                  <th>Total Harga</th>
-                  <th>Diskon</th>
-                  <th>Total Bayar</th>
-                  <th width="5%" class="text-center">Action</th>
-                </thead>
-              </table>
-            </div>
+          <button type="button" class="btn btn-primary btn-icon-text btn-sm mt-2 mb-2" onclick="addForm()">
+            <i class="fa-solid fa-plus btn-icon-prepend"></i>
+            Transaction
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table" id="table-pembelian">
+              <thead>
+                <th width="5%">No</th>
+                <th>Tanggal</th>
+                <th>Supplier</th>
+                <th>Total Item</th>
+                <th>Total Harga</th>
+                <th>Diskon</th>
+                <th>Total Bayar</th>
+                <th width="5%" class="text-center">Action</th>
+              </thead>
+            </table>
           </div>
         </div>
       </div>
-  </section>
-  <div class="modal text-left" id="modal-supplier" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+    </div>
+  </div>
+  <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="modal-detailLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-body">
+        <div class="modal-body pt-1">
+          <div class="table-responsive">
+            <table class="table-detail" id="table-detail">
+              <thead>
+                <th width="5%">No</th>
+                <th>Kode</th>
+                <th>Nama</th>
+                <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Subtotal</th>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-supplier" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-formLabel">Pilih Supplier</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body pt-1">
           <div class="table-responsive">
             <table class="table" id="table">
               <thead>
@@ -66,27 +98,7 @@
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal text-left" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="modal-form"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="table-responsive">
-            <table class="table-detail" id="table-detail">
-              <thead>
-                <th width="5%">No</th>
-                <th>Kode</th>
-                <th>Nama</th>
-                <th>Harga</th>
-                <th>Jumlah</th>
-                <th>Subtotal</th>
-              </thead>
-            </table>
-          </div>
+
         </div>
       </div>
     </div>
@@ -98,7 +110,7 @@
     let table, table1;
 
     $(function() {
-      table = $('.table-pembelian').DataTable({
+      table = $('#table-pembelian').DataTable({
         responsive: true,
         processing: true,
         serverSide: true,
@@ -113,7 +125,7 @@
           },
           {
             data: 'tanggal'
-          },                  
+          },
           {
             data: 'supplier'
           },

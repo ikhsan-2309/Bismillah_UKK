@@ -48,7 +48,15 @@ class User extends Authenticatable
     protected function role(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  ["petugas", "admin"][$value],
+            get: fn ($value) =>  ["petugas", "admin", "manager"][$value],
         );
+    }
+    // protected $appends = [
+    //     'profile_photo_url',
+    // ];
+
+    public function scopeIsNotAdmin($query)
+    {
+        return $query->where('role', '!=', 1);
     }
 }

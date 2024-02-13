@@ -6,6 +6,7 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -43,7 +44,18 @@ class ProdukController extends Controller
                 ';
             })
             ->addColumn('kode_produk', function ($produk) {
-                return '<span class="badge bg-light-success">' . $produk->kode_produk . '</span>';
+                return '<span class="badge badge-success">' . $produk->kode_produk . '</span>';
+            })
+            ->addColumn('nama_produk', function ($produk) {
+                return '<td class="py-1 pl-0">
+                <div class="d-flex align-items-center">
+                  <img src="../../../../storage/images/produk/' . $produk->gambar_produk . '" alt="profile" />
+                  <div class="ms-3">
+                    <p class="mb-0">' . $produk->nama_produk . '</p>
+                    <p class="mb-0 text-muted text-small">' . $produk->nama_kategori . '</p>
+                  </div>
+                </div>
+              </td>';
             })
             ->addColumn('harga_beli', function ($produk) {
                 return format_uang($produk->harga_beli);
@@ -56,17 +68,17 @@ class ProdukController extends Controller
             })
             ->addColumn('aksi', function ($produk) {
                 return '
-                    <div class="btn-group">
-                        <button onclick="editForm(`' . route('produk.update', $produk->id_produk) . '`)" class="btn btn-xs btn-info btn-flat">
-                            <i class="bi bi-pencil-square text-white"></i>
-                        </button>
-                        <button onclick="deleteData(`' . route('produk.destroy', $produk->id_produk) . '`)" class="btn btn-xs btn-danger btn-flat">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
+                <div class="btn-group">
+                    <button onclick="editForm(`' . route('produk.update', $produk->id_produk) . '`)" class="btn btn-sm btn-info btn-flat p-2">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <button onclick="deleteData(`' . route('produk.destroy', $produk->id_produk) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                </div>
                 ';
             })
-            ->rawColumns(['aksi', 'kode_produk', 'select_all'])
+            ->rawColumns(['aksi', 'nama_produk', 'kode_produk', 'select_all'])
             ->make(true);
     }
 
@@ -91,10 +103,28 @@ class ProdukController extends Controller
         $produk = Produk::latest()->first() ?? new Produk();
         $request['kode_produk'] = 'P' . tambah_nol_didepan((int)$produk->id_produk + 1, 6);
 
-        $produk = Produk::create($request->all());
+        if ($request->hasFile('gambar_produk')) {
+            $imageName = time() . '_' . $request->file('gambar_produk')->getClientOriginalName();
+            $imagePath = $request->file('gambar_produk')->storeAs('public/images/produk', $imageName);
+            $produk->gambar_produk = $imageName; // Masukkan nama gambar ke dalam request
+        }
+
+        $produk = Produk::create([
+            'kode_produk' => $request->kode_produk,
+            'id_kategori' => $request->id_kategori,
+            'nama_produk' => $request->nama_produk,
+            'merk' => $request->merk,
+            'gambar_produk' => $imageName,
+            'harga_beli' => $request->harga_beli,
+            'diskon' => $request->diskon,
+            'harga_jual' => $request->harga_jual,
+            'stok' => $request->stok,
+        ]);
 
         return response()->json('Data berhasil disimpan', 200);
     }
+
+
 
     /**
      * Display the specified resource.
@@ -130,20 +160,41 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         $produk = Produk::find($id);
-        $produk->update($request->all());
-
+    
+        // Hapus gambar lama jika ada gambar yang baru diunggah
+        if ($request->hasFile('gambar_produk')) {
+            Storage::delete('public/images/produk/' . $produk->gambar_produk);
+            $imageName = time() . '_' . $request->file('gambar_produk')->getClientOriginalName();
+            $imagePath = $request->file('gambar_produk')->storeAs('public/images/produk', $imageName);
+            $produk->gambar_produk = $imageName; // Masukkan nama gambar ke dalam model
+        }
+    
+        // Perbarui produk
+        $produk->update([
+            'id_kategori' => $request->id_kategori,
+            'nama_produk' => $request->nama_produk,
+            'merk' => $request->merk,
+            // Hanya perbarui gambar_produk jika gambar baru diunggah
+            'gambar_produk' => $request->hasFile('gambar_produk') ? $imageName : $produk->gambar_produk,
+            'harga_beli' => $request->harga_beli,
+            'diskon' => $request->diskon,
+            'harga_jual' => $request->harga_jual,
+            'stok' => $request->stok,
+        ]);
+    
         return response()->json('Data berhasil disimpan', 200);
     }
+    
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $produk = Produk::find($id);
+
+        // Hapus gambar terkait dari penyimpanan
+        Storage::delete('public/images/produk/' . $produk->gambar_produk);
+
+        // Hapus produk dari database
         $produk->delete();
 
         return response(null, 204);
@@ -153,11 +204,17 @@ class ProdukController extends Controller
     {
         foreach ($request->id_produk as $id) {
             $produk = Produk::find($id);
+
+            // Hapus gambar terkait dari penyimpanan
+            Storage::delete('public/images/produk/' . $produk->gambar_produk);
+
+            // Hapus produk dari database
             $produk->delete();
         }
 
         return response(null, 204);
     }
+
 
     public function cetakBarcode(Request $request)
     {
@@ -166,7 +223,6 @@ class ProdukController extends Controller
             $produk = Produk::find($id);
             $dataproduk[] = $produk;
         }
-
         $no  = 1;
         $pdf = PDF::loadView('admin.produk.barcode', compact('dataproduk', 'no'));
         $pdf->setPaper('a4', 'potrait');

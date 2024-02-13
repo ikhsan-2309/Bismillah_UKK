@@ -15,10 +15,10 @@ class PenjualanController extends Controller
     {
         $data['breadcrumb_items'] = [
             ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/products', 'label' => 'Products'],
+            ['link' => '/penjualan', 'label' => 'Penjualan'],
             // Add more items as needed
         ];
-        $data['page_title'] = 'Manage Member';
+        $data['page_title'] = 'Penjualan';
         return view('admin.penjualan.index',$data);
     }
 

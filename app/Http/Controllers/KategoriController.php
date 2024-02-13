@@ -89,15 +89,15 @@ class KategoriController extends Controller
             ->addIndexColumn()
             ->addColumn('aksi', function ($kategori) {
                 return '
-                   <div class="btn-group">
-                       <button onclick="editForm(`' . route('kategori.update', $kategori->id_kategori) . '`)" class="btn btn-xs btn-info btn-flat">
-                           <i class="bi bi-pencil-square text-white"></i>
-                       </button>
-                       <button onclick="deleteData(`' . route('kategori.destroy', $kategori->id_kategori) . '`)" class="btn btn-xs btn-danger btn-flat">
-                           <i class="bi bi-trash"></i>
-                       </button>
-                   </div>
-               ';
+                <div class="btn-group">
+                    <button onclick="editForm(`' . route('kategori.update', $kategori->id_kategori) . '`)" class="btn btn-sm btn-info btn-flat p-2">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <button onclick="deleteData(`' . route('kategori.destroy', $kategori->id_kategori) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                </div>
+            ';
             })
             ->rawColumns(['aksi'])
             ->make(true);

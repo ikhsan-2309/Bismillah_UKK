@@ -13,10 +13,10 @@ class LaporanController extends Controller
     {
         $data['breadcrumb_items'] = [
             ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/products', 'label' => 'Products'],
+            ['link' => '/report', 'label' => 'Report'],
             // Add more items as needed
         ];
-        $data['page_title'] = 'Manage Member';
+        $data['page_title'] = 'Report';
         $tanggalAwal = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
         $tanggalAkhir = date('Y-m-d');
 

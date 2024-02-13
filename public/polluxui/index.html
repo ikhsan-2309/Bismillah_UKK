@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>PolluxUI Admin</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="vendors/datatables/dataTables.bootstrap4.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="navbar-brand-wrapper d-flex justify-content-center">
+        <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+          <a class="navbar-brand brand-logo" href="index.html"><img src="../../images/logo.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../images/logo-mini.svg"
+              alt="logo" /></a>
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+              <img src="../../images/faces/face5.jpg" alt="profile" />
+              <span class="nav-profile-name">Eugenia Mullins</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item">
+                <i class="typcn typcn-cog-outline text-primary"></i>
+                Settings
+              </a>
+              <a class="dropdown-item" href="login.html">
+                <i class="typcn typcn-eject text-primary"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-user-status dropdown">
+            <p class="mb-0">Admin</p>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item nav-date dropdown">
+            <a class="nav-link d-flex justify-content-center align-items-center" href="javascript:;">
+              <i class="typcn typcn-calendar"></i>
+              <h6 class="date mb-0">Monday, 05 February 2024</h6>
+            </a>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
+          <span class="typcn typcn-th-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close typcn typcn-times"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+            <div class="img-ss rounded-circle bg-light border mr-3"></div>Light
+          </div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme">
+            <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+          </div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+      <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close typcn typcn-times"></i>
+        <ul class="nav nav-tabs" id="setting-panel" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab"
+              aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab"
+              aria-controls="chats-section">CHATS</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="setting-content">
+          <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel"
+            aria-labelledby="todo-section">
+            <div class="add-items d-flex px-3 mb-0">
+              <form class="form w-100">
+                <div class="form-group d-flex">
+                  <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="list-wrapper px-3">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Team review meeting at 3.00 PM
+                    </label>
+                  </div>
+                  <i class="remove typcn typcn-delete-outline"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Prepare for presentation
+                    </label>
+                  </div>
+                  <i class="remove typcn typcn-delete-outline"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Resolve all the low priority tickets due today
+                    </label>
+                  </div>
+                  <i class="remove typcn typcn-delete-outline"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Schedule meeting for next week
+                    </label>
+                  </div>
+                  <i class="remove typcn typcn-delete-outline"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Project review
+                    </label>
+                  </div>
+                  <i class="remove typcn typcn-delete-outline"></i>
+                </li>
+              </ul>
+            </div>
+            <div class="events py-4 border-bottom px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="typcn typcn-media-record-outline text-primary mr-2"></i>
+                <span>Feb 11 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Creating component page</p>
+              <p class="text-gray mb-0">build a js based app</p>
+            </div>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="typcn typcn-media-record-outline text-primary mr-2"></i>
+                <span>Feb 7 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+              <p class="text-gray mb-0 ">Call Sarah Graves</p>
+            </div>
+          </div>
+          <!-- To do section tab ends -->
+          <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+            <div class="d-flex align-items-center justify-content-between border-bottom">
+              <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+              <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See
+                All</small>
+            </div>
+            <ul class="chat-list">
+              <li class="list active">
+                <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Thomas Douglas</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">19 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <div class="wrapper d-flex">
+                    <p>Catherine</p>
+                  </div>
+                  <p>Away</p>
+                </div>
+                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                <small class="text-muted my-auto">23 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Daniel Russell</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">14 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <p>James Richardson</p>
+                  <p>Away</p>
+                </div>
+                <small class="text-muted my-auto">2 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Madeline Kennedy</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">5 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Sarah Graves</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">47 min</small>
+              </li>
+            </ul>
+          </div>
+          <!-- chat tab ends -->
+        </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fa fa-tachometer-alt menu-icon"></i> <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-tags menu-icon"></i> <span class="menu-title">Categories</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-boxes menu-icon"></i> <span class="menu-title">Products</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-cash-register menu-icon"></i> <span class="menu-title">Cashiers</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-shopping-cart menu-icon"></i> <span class="menu-title">Pembelian</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-money-bill-wave menu-icon"></i> <span class="menu-title">Penjualan</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-history menu-icon"></i> <span class="menu-title">Transaksi Lama</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-plus menu-icon"></i> <span class="menu-title">Transaksi Baru</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-users menu-icon"></i> <span class="menu-title">Member</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-truck menu-icon"></i> <span class="menu-title">Supplier</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-chart-bar menu-icon"></i> <span class="menu-title">Report</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- partial -->
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="d-flex justify-content-between mb-2">
+            <h5 class="mb-0 text-titlecase">Status statistics</h5>
+            <ul class="navbar-nav mr-lg-2">
+              <li class="nav-item">
+                <div class="d-flex align-items-baseline">
+                  <a class="mb-0 text-decoration-none" style="color: #844fc1;" href="">Home</a> <i class="typcn typcn-chevron-right"></i>
+                  <p class="mb-0">Main Dashboard</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title mb-3 d-flex justify-content-between">
+                <h4 class="card-title align-items-center mt-2">Data table</h4>
+                <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">Click here!</button>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                      <thead>
+                        <tr>
+                          <th class="text-center" width="5%">No</th>
+                          <th class="text-center">Code</th>
+                          <th class="text-center">Product</th>
+                          <th class="text-center">Merk</th>
+                          <th class="text-center">Base Price ($)</th>
+                          <th class="text-center">Purchased Price ($)</th>
+                          <th class="text-center">Discount (%)</th>
+                          <th class="text-center">Stock</th>
+                          <th class="text-center" width="5%">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>2</td>
+                          <td>
+                            <label class="badge badge-success">P000001</label>
+                          </td>
+                          <td class="py-1 pl-0">
+                            <div class="d-flex align-items-center">
+                              <img src="../../../../images/faces/face1.jpg" alt="profile" />
+                              <div class="ms-3">
+                                <p class="mb-0">Kecap</p>
+                                <p class="mb-0 text-muted text-small">Sembako</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Bango</td>
+                          <td class="text-center">$2000</td>
+                          <td class="text-center">$1500</td>
+                          <td class="text-center">32</td>
+                          <td class="text-center">10</td>
+                          <td>
+                            <div class="btn-group">
+                              <button class="btn btn-sm btn-info btn-flat p-2">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                              </button>
+                              <button class="btn btn-sm btn-danger btn-flat p-2" onclick="showSwal('warning-message-and-cancel')">
+                                <i class="fa-regular fa-trash-can"></i>
+                              </button>
+                            </div>
+                          </td>
+
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>
+                            <label class="badge badge-success">P000001</label>
+                          </td>
+                          <td class="py-1 pl-0">
+                            <div class="d-flex align-items-center">
+                              <img src="../../../../images/faces/face1.jpg" alt="profile" />
+                              <div class="ms-3">
+                                <p class="mb-0">Kecap</p>
+                                <p class="mb-0 text-muted text-small">Sembako</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Bango</td>
+                          <td class="text-center">$2000</td>
+                          <td class="text-center">$1500</td>
+                          <td class="text-center">32</td>
+                          <td class="text-center">5</td>
+                          <td>
+                            <div class="btn-group">
+                              <button class="btn btn-sm btn-info btn-flat p-2">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                              </button>
+                              <button class="btn btn-sm btn-danger btn-flat p-2" onclick="showSwal('warning-message-and-cancel')">
+                                <i class="fa-regular fa-trash-can"></i>
+                              </button>
+                            </div>
+                          </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="row">
+                  <div class="col-md-4 col-sm-6 d-flex justify-content-center border-right">
+                    <div class="card-body">
+                      <div class="wrapper text-center">
+                        <h4 class="card-title">Alerts Popups</h4>
+                        <p class="card-description">A success message!</p>
+                        <button class="btn btn-outline-success" onclick="showSwal('success-message')">Click
+                          here!</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-sm-6 d-flex justify-content-center border-right">
+                    <div class="card-body">
+                      <div class="wrapper text-center">
+                        <h4 class="card-title">Alerts Popups</h4>
+                        <p class="card-description">A success message!</p>
+                        <button class="btn btn-outline-success" onclick="showSwal('warning-message-and-cancel')">Click
+                          here!</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                    <div class="card-body">
+                      <div class="wrapper text-center">
+                        <h4 class="card-title">Alerts Popups</h4>
+                        <p class="card-description">A message with auto close timer</p>
+                        <button class="btn btn-outline-success" onclick="showSwal('auto-close')">Click here!</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Large Modal</h4>
+                  <p class="card-description">Large sized modal with max-width set to <code>90%</code></p>
+                  <!-- Modal starts -->
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal">Click for demo<i class="typcn typcn-media-play ms-1"></i></button>
+                  </div>
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Modal body text goes here.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-success">Submit</button>
+                          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Modal Ends -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!-- base:js -->
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <script src="vendors/sweetalert/sweetalert.min.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <script>
+      (function ($) {
+        'use strict';
+        $(function () {
+          $('#order-listing').DataTable({
+            "aLengthMenu": [
+              [5, 10, 15, -1],
+              [5, 10, 15, "All"]
+            ],
+            "iDisplayLength": 10,
+            "language": {
+              search: ""
+            }
+          });
+          $('#order-listing').each(function () {
+            var datatable = $(this);
+            // SEARCH - Add the placeholder for Search and Turn this into in-line form control
+            var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+            search_input.attr('placeholder', 'Search');
+            search_input.removeClass('form-control-sm');
+            // LENGTH - Inline-Form control
+            var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+            length_sel.removeClass('form-control-sm');
+          });
+        });
+      })(jQuery);
+    </script>
+    <script src="vendors/datatables/jquery.dataTables.js"></script>
+    <script src="vendors/datatables/dataTables.bootstrap4.js"></script>
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/alerts.js"></script>
+    <script src="js/todolist.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>

@@ -3,44 +3,43 @@
   <link rel="stylesheet" href="{{ asset('assets/extensions/flatpickr/flatpickr.min.css') }}">
 @endpush
 @section('content')
-  <section class="section">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="card-title">
-          List Pembelian
-          <button type="button" class="btn btn-outline-primary float-end " onclick="updatePeriode()">Ubah Periode</button>
-          <a href="{{ route('laporan.export_pdf', [$tanggalAwal, $tanggalAkhir]) }}" target="_blank"
-            class="btn btn-outline-success float-end m-2 mt-0"> Export PDF</a>
-
-        </h5>
-        <div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table" id="table">
-                <thead>
-                  <th width="5%">No</th>
-                  <th>Tanggal</th>
-                  <th>Penjualan</th>
-                  <th>Pembelian</th>
-                  <th>Pendapatan</th>
-                </thead>
-              </table>
-            </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title mb-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title me-auto">List Categories</h4>
+        <div class="d-flex"> <a href="{{ route('laporan.export_pdf', [$tanggalAwal, $tanggalAkhir]) }}" target="_blank"
+            class="btn btn-outline-success btn-sm m-2 mt-0">Export PDF</a>
+          <button class="btn btn-outline-primary btn-sm m-2 mt-0 mr-0" onclick="updatePeriode()">Ubah Periode</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table" id="table">
+              <thead>
+                <th class="text-center" width="5%">No</th>
+                <th class="text-center">Tanggal</th>
+                <th class="text-center">Penjualan ($)</th>
+                <th class="text-center">Pembelian ($)</th>
+                <th class="text-center">Pendapatan ($)</th>
+              </thead>
+            </table>
           </div>
         </div>
       </div>
-  </section>
-  <div class="modal text-left" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+    </div>
+  </div>
+  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel6">Periode Laporan</h4>
+          <h5 class="modal-title" id="modal-formLabel">Periode Laporan</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <i data-feather="x"></i>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body pt-1">
           <form action="{{ route('laporan.index') }}" method="get" data-toggle="validator" class="form form-horizontal">
             <div class="form-group row">
               <label for="tanggal_awal" class="col-lg-4 col-lg-offset-1 control-label">Tanggal Awal</label>
@@ -59,20 +58,16 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Close</span>
-              </button>
-              <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Accept</span>
-              </button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
+  {{-- @includeIf('admin.category.form') --}}
 @endsection
 @push('scripts')
   <script src="assets/extensions/flatpickr/flatpickr.min.js"></script>
@@ -92,19 +87,24 @@
         columns: [{
             data: 'DT_RowIndex',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center',
           },
           {
-            data: 'tanggal'
+            data: 'tanggal',
+            class: 'text-center',
           },
           {
-            data: 'penjualan'
+            data: 'penjualan',
+            class: 'text-center',
           },
           {
-            data: 'pembelian'
+            data: 'pembelian',
+            class: 'text-center',
           },
           {
-            data: 'pendapatan'
+            data: 'pendapatan',
+            class: 'text-center',
           }
         ],
         dom: 'Brt',

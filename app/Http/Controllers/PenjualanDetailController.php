@@ -15,10 +15,10 @@ class PenjualanDetailController extends Controller
     {
         $data['breadcrumb_items'] = [
             ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/products', 'label' => 'Products'],
+            ['link' => '/penjualan', 'label' => 'Penjualan'],
             // Add more items as needed
         ];
-        $data['page_title'] = 'Manage Member';
+        $data['page_title'] = 'Penjualan Detail';
         $produk = Produk::orderBy('nama_produk')->get();
         $member = Member::orderBy('nama')->get();
         $diskon = Setting::first()->diskon ?? 0;

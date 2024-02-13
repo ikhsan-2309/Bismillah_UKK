@@ -15,7 +15,7 @@ class SupplierController extends Controller
             // Add more items as needed
         ];
         $data['page_title'] = 'Manage Supplier';
-        return view('admin.supplier.index',$data);
+        return view('admin.supplier.index', $data);
     }
 
     public function data()
@@ -28,13 +28,13 @@ class SupplierController extends Controller
             ->addColumn('aksi', function ($supplier) {
                 return '
                 <div class="btn-group">
-                <button onclick="editForm(`' . route('supplier.update', $supplier->id_supplier) . '`)" class="btn btn-xs btn-info btn-flat">
-                    <i class="bi bi-pencil-square text-white"></i>
-                </button>
-                <button onclick="deleteData(`' . route('supplier.destroy', $supplier->id_supplier) . '`)" class="btn btn-xs btn-danger btn-flat">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </div>
+                    <button onclick="editForm(`' . route('supplier.update', $supplier->id_supplier) . '`)" class="btn btn-sm btn-info btn-flat p-2">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <button onclick="deleteData(`' . route('supplier.destroy', $supplier->id_supplier) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                </div>
                 ';
             })
             ->rawColumns(['aksi'])

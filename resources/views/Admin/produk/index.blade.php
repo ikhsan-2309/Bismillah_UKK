@@ -1,58 +1,67 @@
 @extends('admin.layouts.app')
 
 @section('content')
-  <section class="section">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="card-title">
-          List kategori
-          <button type="button" class="btn btn-outline-primary float-end" onclick="addForm('{{ route('produk.store') }}')">+
-            Products</button>
-          <button type="button" class="mr-3 btn btn-outline-danger float-end m-2 mt-0"
-            onclick="deleteSelected('{{ route('produk.delete_selected') }}')">Hapus</button>
-          <button type="button" class="mr-3 btn btn-outline-success float-end"
-            onclick="cetakBarcode('{{ route('produk.cetak_barcode') }}')">Cetak</button>
-        </h5>
-        <div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table" id="table">
-                <thead>
-                  <form action="" method="post" class="form-produk">
-                    @csrf
-                    <th width="3%">
-                      <input type="checkbox" name="select_all" id="select_all">
-                    </th>
-                    <th width="5%">No</th>
-                    <th>Code</th>
-                    <th>Product Name</th>
-                    <th>Category</th>
-                    <th>Merk</th>
-                    <th>Harga Beli</th>
-                    <th>Harga Jual</th>
-                    <th>Diskon</th>
-                    <th>Stok</th>
-                  </form>
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title mb-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title me-auto">List Categories</h4>
+        <div class="d-flex">
+          <button type="button" class="btn btn-danger btn-icon-text btn-sm mt-2 mb-2"
+            onclick="deleteSelected('{{ route('produk.delete_selected') }}')">
+            <i class="fa-solid fa-trash btn-icon-prepend"></i>
+            Delete
+          </button>
+          <button type="button" class="btn btn-success btn-icon-text btn-sm m-2"
+            onclick="cetakBarcode('{{ route('produk.cetak_barcode') }}')">
+            <i class="fa-solid fa-print btn-icon-prepend"></i>
+            Print
+          </button>
+          <button type="button" class="btn btn-primary btn-icon-text btn-sm mt-2 mb-2"
+            onclick="addForm('{{ route('produk.store') }}')">
+            <i class="fa-solid fa-plus btn-icon-prepend"></i>
+            Product
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table" id="table">
+              <thead>
+                <form action="" method="post" class="form-produk">
+                  @csrf
+                  <th width="3%">
+                    <input type="checkbox" name="select_all" id="select_all">
+                  </th>
+                  <th width="5%">No</th>
+                  <th>Code</th>
+                  <th>Product</th>
+                  <th>Merk</th>
+                  <th>Harga Beli</th>
+                  <th>Harga Jual</th>
+                  <th>Diskon</th>
+                  <th>Stok</th>
                   <th width="5%">Action</th>
-                </thead>
-              </table>
-            </div>
+                </form>
+              </thead>
+            </table>
           </div>
         </div>
       </div>
-  </section>
-  <div class="modal text-left" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+    </div>
+  </div>
+  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel6"></h4>
+          <h5 class="modal-title" id="modal-formLabel"></h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <i data-feather="x"></i>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <form action="" method="POST" class="form form-horizontal">
+        <div class="modal-body pt-1">
+          <form action="{{ route('produk.store') }}" method="POST" class="form form-horizontal" enctype="multipart/form-data">
             @csrf
             @method('post')
             <div class="form-body">
@@ -86,6 +95,13 @@
                   <span class="help-block with-errors"></span>
                 </div>
                 <div class="mt-2">
+                  <label for="gambar_produk">gambar_produk</label>
+                </div>
+                <div class="mt-2">
+                  <input type="file" id="gambar_produk" class="form-control" name="gambar_produk">
+                  <span class="help-block with-errors"></span>
+                </div>
+                <div class="mt-2">
                   <label for="harga_beli">Harga Beli</label>
                 </div>
                 <div class="mt-2">
@@ -97,8 +113,8 @@
                   <label for="harga_jual">Harga Jual</label>
                 </div>
                 <div class="mt-2">
-                  <input type="number" id="harga_jual" class="form-control" name="harga_jual" placeholder="Harga Jual"
-                    required autofocus>
+                  <input type="number" id="harga_jual" class="form-control" name="harga_jual"
+                    placeholder="Harga Jual" required autofocus>
                   <span class="help-block with-errors"></span>
                 </div>
                 <div class="mt-2">
@@ -120,16 +136,11 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Close</span>
-              </button>
-              <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Save</span>
-              </button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
             </div>
           </form>
+
         </div>
       </div>
     </div>
@@ -166,9 +177,6 @@
             data: 'nama_produk'
           },
           {
-            data: 'nama_kategori'
-          },
-          {
             data: 'merk'
           },
           {
@@ -191,19 +199,30 @@
         ]
       });
 
-      $('#modal-form').validator().on('submit', function(e) {
-        if (!e.preventDefault()) {
-          $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
-            .done((response) => {
-              $('#modal-form').modal('hide');
-              table.ajax.reload();
-            })
-            .fail((errors) => {
-              alert('Tidak dapat menyimpan data');
-              return;
-            });
-        }
+      $('#modal-form form').on('submit', function(e) {
+        e.preventDefault(); // Menghentikan form submission default
+        let formData = new FormData(
+        this); // Menggunakan 'this' untuk merujuk ke elemen form yang sedang di-submit
+
+        $.ajax({
+          url: $(this).attr('action'),
+          method: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            $('#modal-form').modal('hide');
+            table.ajax.reload();
+            showSwal('success');
+          },
+          error: function(xhr, status, error) {
+            showSwal('error');
+            console.error(xhr.responseText);
+          }
+        });
       });
+
+
 
       $('[name=select_all]').on('click', function() {
         $(':checkbox').prop('checked', this.checked);
@@ -246,33 +265,39 @@
     }
 
     function deleteData(url) {
-      if (confirm('Yakin ingin menghapus data terpilih?')) {
-        $.post(url, {
-            '_token': $('[name=csrf-token]').attr('content'),
-            '_method': 'delete'
-          })
-          .done((response) => {
-            table.ajax.reload();
-          })
-          .fail((errors) => {
-            alert('Tidak dapat menghapus data');
-            return;
-          });
-      }
+      showSwal('delete').then((result) => { // Call showSwal directly
+        if (result) {
+          $.post(url, {
+              '_token': $('[name=csrf-token]').attr('content'),
+              '_method': 'delete'
+            })
+            .done((response) => {
+              table.ajax.reload();
+              showSwal('success');
+            })
+            .fail((errors) => {
+              showSwal('error');
+              return;
+            });
+        }
+      });
     }
 
     function deleteSelected(url) {
       if ($('input:checked').length > 0) {
-        if (confirm('Yakin ingin menghapus data terpilih?')) {
-          $.post(url, $('.form-produk').serialize())
-            .done((response) => {
-              table.ajax.reload();
-            })
-            .fail((errors) => {
-              alert('Tidak dapat menghapus data');
-              return;
-            });
-        }
+        showSwal('delete').then((result) => { // Call showSwal directly
+          if (result) {
+            $.post(url, $('.form-produk').serialize())
+              .done((response) => {
+                table.ajax.reload();
+                showSwal('success');
+              })
+              .fail((errors) => {
+                showSwal('error');
+                return;
+              });
+          }
+        });
       } else {
         alert('Pilih data yang akan dihapus');
         return;

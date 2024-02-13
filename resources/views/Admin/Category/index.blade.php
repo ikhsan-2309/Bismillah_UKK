@@ -1,40 +1,41 @@
 @extends('admin.layouts.app')
 
 @section('content')
-  <section class="section">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="card-title">
-          List kategori
-          <button type="button" class="btn btn-outline-primary float-end"
-            onclick="addForm('{{ route('kategori.store') }}')">+ Category</button>
-        </h5>
-        <div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table" id="table">
-                <thead>
-                  <th width="5%">No</th>
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title mb-3 d-flex justify-content-between">
+        <h4 class="card-title align-items-center mt-2">List Categories</h4>
+        <button class="btn btn-outline-primary btn-sm" onclick="addForm('{{ route('kategori.store') }}')">+
+          Category</button>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table id="table" class="table">
+              <thead>
+                <tr>
+                  <th class="text-center" width="5%">No</th>
                   <th>Category Name</th>
-                  <th width="15%">Action</th>
-                </thead>
-              </table>
-            </div>
+                  <th class="text-center" width="5%">Actions</th>
+                </tr>
+              </thead>
+            </table>
           </div>
         </div>
       </div>
-  </section>
-  <div class="modal text-left" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+    </div>
+  </div>
+  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel6"></h4>
+          <h5 class="modal-title" id="modal-formLabel"></h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <i data-feather="x"></i>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body pt-1">
           <form action="" method="POST" class="form form-horizontal">
             @csrf
             @method('post')
@@ -51,22 +52,14 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Close</span>
-              </button>
-              <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Accept</span>
-              </button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-
-  {{-- @includeIf('admin.category.form') --}}
 @endsection
 
 @push('scripts')
@@ -85,7 +78,8 @@
         columns: [{
             data: 'DT_RowIndex',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center'
           },
           {
             data: 'nama_kategori'
@@ -105,6 +99,7 @@
             .done((response) => {
               $('#modal-form').modal('hide');
               table.ajax.reload();
+              showSwal('success');
             })
             .fail((errors) => {
               alert('Tidak dapat menyimpan data');
@@ -136,27 +131,32 @@
       $.get(url)
         .done((response) => {
           $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
+          showSwal('success');
         })
         .fail((errors) => {
           alert('Tidak dapat menampilkan data');
+          showSwal('delete');
           return;
         });
     }
 
     function deleteData(url) {
-      if (confirm('Yakin ingin menghapus data terpilih?')) {
-        $.post(url, {
-            '_token': $('[name=csrf-token]').attr('content'),
-            '_method': 'delete'
-          })
-          .done((response) => {
-            table.ajax.reload();
-          })
-          .fail((errors) => {
-            alert('Tidak dapat menghapus data');
-            return;
-          });
-      }
+      showSwal('delete').then((result) => { // Call showSwal directly
+        if (result) {
+          $.post(url, {
+              '_token': $('[name=csrf-token]').attr('content'),
+              '_method': 'delete'
+            })
+            .done((response) => {
+              table.ajax.reload();
+              showSwal('success');
+            })
+            .fail((errors) => {
+              showSwal('error');
+              return;
+            });
+        }
+      });
     }
   </script>
 @endpush

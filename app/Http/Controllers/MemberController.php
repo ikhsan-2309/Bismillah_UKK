@@ -18,7 +18,7 @@ class MemberController extends Controller
     {
         $data['breadcrumb_items'] = [
             ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/products', 'label' => 'Products'],
+            ['link' => '/member', 'label' => 'Member'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Manage Member';
@@ -43,11 +43,11 @@ class MemberController extends Controller
             ->addColumn('aksi', function ($member) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('member.update', $member->id_member) . '`)" class="btn btn-xs btn-info btn-flat">
-                        <i class="bi bi-pencil-square text-white"></i>
+                    <button onclick="editForm(`' . route('member.update', $member->id_member) . '`)" class="btn btn-sm btn-info btn-flat p-2">
+                        <i class="fa-regular fa-pen-to-square"></i>
                     </button>
-                    <button onclick="deleteData(`' . route('member.destroy', $member->id_member) . '`)" class="btn btn-xs btn-danger btn-flat">
-                        <i class="bi bi-trash"></i>
+                    <button onclick="deleteData(`' . route('member.destroy', $member->id_member) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+                        <i class="fa-regular fa-trash-can"></i>
                     </button>
                 </div>
                 ';

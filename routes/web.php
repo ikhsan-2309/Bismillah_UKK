@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     PenjualanController,
     PenjualanDetailController,
     LaporanController,
+    UserController,
 };
 
 /*
@@ -38,7 +39,7 @@ All Normal Users Routes List
 --------------------------------------------
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:user'])->group(function () {
-    Route::get('user', [HomeController::class, 'index'])->name('user');
+    Route::get('petugas', [HomeController::class, 'index'])->name('petugas');
 });
 
 /*------------------------------------------
@@ -98,4 +99,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/data/{awal}/{akhir}', [LaporanController::class, 'data'])->name('laporan.data');
     Route::get('/laporan/pdf/{awal}/{akhir}', [LaporanController::class, 'exportPDF'])->name('laporan.export_pdf');
+
+    Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
+    Route::resource('/user', UserController::class);
 });
