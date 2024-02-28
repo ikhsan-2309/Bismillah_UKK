@@ -27,10 +27,10 @@
                 <th>Tanggal</th>
                 <th>Supplier</th>
                 <th>Total Item</th>
-                <th>Total Harga</th>
-                <th>Diskon</th>
-                <th>Total Bayar</th>
-                <th width="5%" class="text-center">Action</th>
+                <th>Total Harga (Rp)</th>
+                <th>Diskon (%)</th>
+                <th>Total Bayar (Rp)</th>
+                <th width="5%" class="text-center"><i class="fa fa-cog"></i></th>
               </thead>
             </table>
           </div>
@@ -38,20 +38,20 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="modal-detailLabel"
+  <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body pt-1">
           <div class="table-responsive">
-            <table class="table-detail" id="table-detail">
+            <table class="table" id="table-detail">
               <thead>
                 <th width="5%">No</th>
                 <th>Kode</th>
                 <th>Nama</th>
                 <th>Harga</th>
                 <th>Jumlah</th>
-                <th>Subtotal</th>
+                <th>Subtotal (Rp)</th>
               </thead>
             </table>
           </div>
@@ -114,32 +114,37 @@
         responsive: true,
         processing: true,
         serverSide: true,
-        autoWidth: false,
+        autoWidth: true,
         ajax: {
           url: '{{ route('pembelian.data') }}',
         },
         columns: [{
             data: 'DT_RowIndex',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center',
           },
           {
-            data: 'tanggal'
+            data: 'tanggal',
           },
           {
-            data: 'supplier'
+            data: 'supplier',
           },
           {
-            data: 'total_item'
+            data: 'total_item',
+            class: 'text-center',
           },
           {
-            data: 'total_harga'
+            data: 'total_harga',
+            class: 'text-center',
           },
           {
-            data: 'diskon'
+            data: 'diskon',
+            class: 'text-center',
           },
           {
-            data: 'bayar'
+            data: 'bayar',
+            class: 'text-center',
           },
           {
             data: 'aksi',
@@ -150,16 +155,17 @@
       });
 
       $('.table-supplier').DataTable();
-      table1 = $('.table-detail').DataTable({
+      table1 = $('#table-detail').DataTable({
         responsive: true,
         processing: true,
-        autoWidth: false,
+        autoWidth: true,
         bSort: false,
         dom: 'Brt',
         columns: [{
             data: 'DT_RowIndex',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center'
           },
           {
             data: 'kode_produk'
@@ -192,19 +198,22 @@
     }
 
     function deleteData(url) {
-      if (confirm('Yakin ingin menghapus data terpilih?')) {
-        $.post(url, {
-            '_token': $('[name=csrf-token]').attr('content'),
-            '_method': 'delete'
-          })
-          .done((response) => {
-            table.ajax.reload();
-          })
-          .fail((errors) => {
-            alert('Tidak dapat menghapus data');
-            return;
-          });
-      }
+      showSwal('delete').then((result) => { // Call showSwal directly
+        if (result) {
+          $.post(url, {
+              '_token': $('[name=csrf-token]').attr('content'),
+              '_method': 'delete'
+            })
+            .done((response) => {
+              table.ajax.reload();
+              showSwal('s-delete');
+            })
+            .fail((errors) => {
+              showSwal('error');
+              return;
+            });
+        }
+      });
     }
   </script>
 @endpush

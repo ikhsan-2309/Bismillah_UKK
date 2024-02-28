@@ -3,17 +3,27 @@
 @section('content')
   <div class="card">
     <div class="card-body">
-      <div class="card-title mb-3 d-flex justify-content-between">
-        <h4 class="card-title align-items-center mt-2">List Members</h4>
-        <button class="btn btn-outline-primary btn-sm" onclick="addForm('{{ route('member.store') }}')">+
-          Member</button>
+      <div class="card-title mb-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title me-auto">List Categories</h4>
+        <div class="d-flex">
+          <button class="btn btn-success btn-icon-text btn-sm m-2"
+            onclick="cetakMember('{{ route('member.cetak_member') }}')">
+            <i class="fa-solid fa-print btn-icon-prepend"></i>
+            Print
+          </button>
+          <button type="button" class="btn btn-primary btn-icon-text btn-sm mt-2 mb-2"
+            onclick="addForm('{{ route('member.store') }}')">
+            <i class="fa-solid fa-plus btn-icon-prepend"></i>
+            Member
+          </button>
+        </div>
       </div>
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
-            <table class="table" id="table">
-              <thead>
-                <form action="{{ route('member.cetak_member') }}" method="post" class="form-member">
+            <form action="{{ route('member.cetak_member') }}" method="post" class="form-member">
+              <table class="table" id="table">
+                <thead>
                   @csrf
                   <th width="3%">
                     <input type="checkbox" name="select_all" id="select_all">
@@ -23,10 +33,10 @@
                   <th>Member Name</th>
                   <th>Alamat</th>
                   <th>Telepon</th>
-                </form>
-                <th width="5%">Action</th>
-              </thead>
-            </table>
+                  <th width="5%">Action</th>
+                </thead>
+              </table>
+            </form>
           </div>
         </div>
       </div>
@@ -189,7 +199,7 @@
             })
             .done((response) => {
               table.ajax.reload();
-              showSwal('success');
+              showSwal('s-delete');
             })
             .fail((errors) => {
               showSwal('error');

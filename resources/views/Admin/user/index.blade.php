@@ -5,7 +5,7 @@
     <div class="card-body">
       <div class="card-title mb-3 d-flex justify-content-between">
         <h4 class="card-title align-items-center mt-2">List Chasiers</h4>
-        <button class="btn btn-outline-primary btn-sm" onclick="addForm('{{ route('user.store') }}')">+
+        <button class="btn btn-primary btn-sm" onclick="addForm('{{ route('user.store') }}')">+
           Chasier</button>
       </div>
       <div class="row">
@@ -13,10 +13,10 @@
           <div class="table-responsive">
             <table class="table" id="table">
               <thead>
-                <th width="5%">No</th>
+                <th width="7%" class="text-center">No</th>
                 <th>Nama</th>
                 <th>Email</th>
-                <th class="text-center" width="5%"><i class="bi bi-gear"></i></th>
+                <th class="text-center" width="5%"><i class="fa fa-cog"></i></th>
               </thead>
             </table>
           </div>
@@ -101,7 +101,8 @@
         columns: [{
             data: 'DT_RowIndex',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center'
           },
           {
             data: 'name'
@@ -176,7 +177,7 @@
             })
             .done((response) => {
               table.ajax.reload();
-              showSwal('success');
+              showSwal('s-delete');
             })
             .fail((errors) => {
               showSwal('error');

@@ -5,7 +5,7 @@
     <div class="card-body">
       <div class="card-title mb-3 d-flex justify-content-between">
         <h4 class="card-title align-items-center mt-2">List Suppliers</h4>
-        <button class="btn btn-outline-primary btn-sm" onclick="addForm('{{ route('supplier.store') }}')">+
+        <button class="btn btn-primary btn-sm" onclick="addForm('{{ route('supplier.store') }}')">+
           Supplier</button>
       </div>
       <div class="row">
@@ -95,7 +95,8 @@
         columns: [{
             data: 'DT_RowIndex',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center',
           },
           {
             data: 'nama'
@@ -170,7 +171,7 @@
             })
             .done((response) => {
               table.ajax.reload();
-              showSwal('success');
+              showSwal('s-delete');
             })
             .fail((errors) => {
               showSwal('error');

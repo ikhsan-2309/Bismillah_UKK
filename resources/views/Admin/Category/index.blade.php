@@ -3,10 +3,15 @@
 @section('content')
   <div class="card">
     <div class="card-body">
-      <div class="card-title mb-3 d-flex justify-content-between">
-        <h4 class="card-title align-items-center mt-2">List Categories</h4>
-        <button class="btn btn-outline-primary btn-sm" onclick="addForm('{{ route('kategori.store') }}')">+
-          Category</button>
+      <div class="card-title mb-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title me-auto">List Categories</h4>
+        <div class="d-flex">
+          <button type="button" class="btn btn-primary btn-icon-text btn-sm mt-2 mb-2"
+            onclick="addForm('{{ route('kategori.store') }}')">
+            <i class="fa-solid fa-plus btn-icon-prepend"></i>
+            Category
+          </button>
+        </div>
       </div>
       <div class="row">
         <div class="col-12">
@@ -45,9 +50,11 @@
                   <label for="first-name-horizontal">Category Name</label>
                 </div>
                 <div class="mt-3">
-                  <input type="text" id="nama_kategori" class="form-control" name="nama_kategori"
+                  <input type="text" id="nama_kategori" class="form-control has-valiadtion" name="nama_kategori"
                     placeholder="Category Name" required autofocus>
-                  <span class="help-block with-errors"></span>
+                  <div class="invalid-feedback">
+                    Please choose a username.
+                  </div>
                 </div>
               </div>
             </div>
@@ -70,6 +77,7 @@
       table = $('#table').DataTable({
         responsive: true,
         processing: true,
+        processingMessage: "<div class='loader-demo-box'><div class='dot-opacity-loader'><span></span><span></span><span></span></div></div>",
         serverSide: true,
         autoWidth: false,
         ajax: {
@@ -131,11 +139,9 @@
       $.get(url)
         .done((response) => {
           $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
-          showSwal('success');
         })
         .fail((errors) => {
           alert('Tidak dapat menampilkan data');
-          showSwal('delete');
           return;
         });
     }
@@ -149,7 +155,7 @@
             })
             .done((response) => {
               table.ajax.reload();
-              showSwal('success');
+              showSwal('s-delete');
             })
             .fail((errors) => {
               showSwal('error');

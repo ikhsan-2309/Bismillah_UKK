@@ -13,8 +13,9 @@ class PembelianDetailController extends Controller
     public function index()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/pembelian', 'label' => 'Pembelian'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'pembelian.index', 'label' => 'Pembelian'],
+            ['link' => 'pembelian_detail.index', 'label' => 'Pembelian Detail'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Pembelian Detail';
@@ -41,13 +42,15 @@ class PembelianDetailController extends Controller
 
         foreach ($detail as $item) {
             $row = array();
-            $row['kode_produk'] = '<span class="badge bg-light-success">' . $item->produk['kode_produk'] . '</span';
+            $row['kode_produk'] = '<span class="badge badge-success">' . $item->produk['kode_produk'] . '</span';
             $row['nama_produk'] = $item->produk['nama_produk'];
             $row['harga_beli']  = 'Rp. ' . format_uang($item->harga_beli);
-            $row['jumlah']      = '<input type="number" class="form-control input-sm quantity" data-id="' . $item->id_pembelian_detail . '" value="' . $item->jumlah . '">';
+            $row['jumlah']      = '<input type="number" class="form-control form-control-sm input-xs-sm quantity text-center" style="width: 120px;" data-id="' . $item->id_pembelian_detail . '" value="' . $item->jumlah . '"  >';
             $row['subtotal']    = 'Rp. ' . format_uang($item->subtotal);
             $row['aksi']        = '<div class="btn-group">
-                                        <button onclick="deleteData(`' . route('pembelian_detail.destroy', $item->id_pembelian_detail) . '`)" class="btn btn-xs btn-danger btn-flat text-center"><i class="bi bi-trash"></i></button>
+            <button onclick="deleteData(`' . route('pembelian_detail.destroy', $item->id_pembelian_detail) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+            <i class="fa-regular fa-trash-can"></i>
+        </button>
                                     </div>';
             $data[] = $row;
 

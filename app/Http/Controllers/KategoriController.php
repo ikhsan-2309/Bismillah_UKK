@@ -19,8 +19,8 @@ class KategoriController extends Controller
     public function index()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/categories', 'label' => 'Categories'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'kategori.index', 'label' => 'Categories'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Manage Categories';

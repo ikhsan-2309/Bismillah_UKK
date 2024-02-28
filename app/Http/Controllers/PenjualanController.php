@@ -14,8 +14,8 @@ class PenjualanController extends Controller
     public function index()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/penjualan', 'label' => 'Penjualan'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'penjualan.index', 'label' => 'Penjualan'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Penjualan';
@@ -33,20 +33,20 @@ class PenjualanController extends Controller
                 return format_uang($penjualan->total_item);
             })
             ->addColumn('total_harga', function ($penjualan) {
-                return 'Rp. '. format_uang($penjualan->total_harga);
+                return format_uang($penjualan->total_harga);
             })
             ->addColumn('bayar', function ($penjualan) {
-                return 'Rp. '. format_uang($penjualan->bayar);
+                return format_uang($penjualan->bayar);
             })
             ->addColumn('tanggal', function ($penjualan) {
                 return tanggal_indonesia($penjualan->created_at, false);
             })
             ->addColumn('kode_member', function ($penjualan) {
-                $member = $penjualan->member->kode_member ?? '';
-                return '<span class="badge bg-light-success">'. $member .'</spa>';
+                $member = $penjualan->member->kode_member ?? 'none';
+                return '<span class="badge badge-success">'. $member .'</span>';
             })
             ->editColumn('diskon', function ($penjualan) {
-                return $penjualan->diskon . '%';
+                return $penjualan->diskon;
             })
             ->editColumn('kasir', function ($penjualan) {
                 return $penjualan->user->name ?? '';
@@ -54,8 +54,12 @@ class PenjualanController extends Controller
             ->addColumn('aksi', function ($penjualan) {
                 return '
                 <div class="btn-group">
-                    <button onclick="showDetail(`'. route('penjualan.show', $penjualan->id_penjualan) .'`)" class="btn btn-xs btn-info btn-flat"><i class="bi bi-eye-fill text-white"></i></button>
-                    <button onclick="deleteData(`'. route('penjualan.destroy', $penjualan->id_penjualan) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="bi bi-trash"></i></button>
+                    <button onclick="showDetail(`' . route('penjualan.show', $penjualan->id_penjualan) . '`)" class="btn btn-sm btn-info btn-flat p-2">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                    <button onclick="deleteData(`' . route('penjualan.destroy', $penjualan->id_penjualan) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
                 </div>
                 ';
             })
@@ -99,7 +103,6 @@ class PenjualanController extends Controller
             $produk->stok -= $item->jumlah;
             $produk->update();
         }
-
         return redirect()->route('transaksi.selesai');
     }
 
@@ -111,19 +114,19 @@ class PenjualanController extends Controller
             ->of($detail)
             ->addIndexColumn()
             ->addColumn('kode_produk', function ($detail) {
-                return '<span class="label label-success">'. $detail->produk->kode_produk .'</span>';
+                return '<span class="badge badge-success">'. $detail->produk->kode_produk .'</span>';
             })
             ->addColumn('nama_produk', function ($detail) {
                 return $detail->produk->nama_produk;
             })
             ->addColumn('harga_jual', function ($detail) {
-                return 'Rp. '. format_uang($detail->harga_jual);
+                return format_uang($detail->harga_jual);
             })
             ->addColumn('jumlah', function ($detail) {
                 return format_uang($detail->jumlah);
             })
             ->addColumn('subtotal', function ($detail) {
-                return 'Rp. '. format_uang($detail->subtotal);
+                return format_uang($detail->subtotal);
             })
             ->rawColumns(['kode_produk'])
             ->make(true);
@@ -151,11 +154,12 @@ class PenjualanController extends Controller
     public function selesai()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/products', 'label' => 'Products'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'penjualan.index', 'label' => 'Penjualan'],
+            ['link' => 'transaksi.selesai', 'label' => 'Success'],
             // Add more items as needed
         ];
-        $data['page_title'] = 'Manage Member';
+        $data['page_title'] = 'Transaction Success';
         $setting = Setting::first();
 
         return view('admin.penjualan.selesai', compact('setting'), $data);

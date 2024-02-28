@@ -16,8 +16,8 @@
     showSwal = function(type) {
       if (type === 'delete') {
         return swal({ // Return the Promise
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
+          title: 'Confirm Deletion',
+          text: "Are you sure you want to delete this item?",
           icon: 'warning',
           buttons: {
             cancel: {
@@ -36,21 +36,44 @@
             }
           }
         });
+      } else if (type === 'transaction') {
+        return swal({ // Return the Promise
+          title: 'Confirm Deletion',
+          text: "Are you sure you want to delete this item?",
+          icon: 'warning',
+          buttons: {
+            cancel: {
+              text: "Cancel",
+              value: null,
+              visible: true,
+              className: "btn btn-danger",
+              closeModal: true
+            },
+            confirm: {
+              text: "OK",
+              value: true,
+              visible: true,
+              className: "btn btn-primary btn-simpan",
+              closeModal: true
+            }
+          }
+        });
       } else if (type === 'success') {
         return swal({
-          title: 'Congratulations!',
-          text: 'You entered the correct answer',
+          title: 'Successfully',
+          text: 'The item has been saved successfully.',
           icon: 'success',
           timer: 2000,
           button: false,
-        }).then(
-          function() {}, // No need for a success callback here
-          function(dismiss) {
-            if (dismiss === 'timer') {
-              console.log('I was closed by the timer');
-            }
-          }
-        );
+        });
+      } else if (type === 's-delete') {
+        return swal({
+          title: 'Item Deleted Successfully',
+          text: 'The item has been deleted.',
+          icon: 'success',
+          timer: 2000,
+          button: false,
+        });
       } else if (type === 'error') {
         return swal({
           title: 'Error',

@@ -53,13 +53,11 @@
                 <div class="d-flex align-items-baseline">
                   @foreach ($breadcrumb_items as $item)
                     @if ($loop->last)
-                    
                       <p class="mb-0">{{ $item['label'] }}</p>
-                      
                     @else
-                    <a class="mb-0 text-decoration-none" style="color: #844fc1;"
-                    href="{{ route('admin') }}">{{ $item['label'] }}</a>
-                    <i class="typcn typcn-chevron-right"></i>
+                      <a class="mb-0 text-decoration-none" style="color: #844fc1;"
+                        href="{{ route($item['link']) }}">{{ $item['label'] }}</a>
+                      <i class="typcn typcn-chevron-right"></i>
                     @endif
                   @endforeach
                 </div>

@@ -10,9 +10,8 @@ class SupplierController extends Controller
     public function index()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/products', 'label' => 'Products'],
-            // Add more items as needed
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'supplier.index', 'label' => 'Supplier'],
         ];
         $data['page_title'] = 'Manage Supplier';
         return view('admin.supplier.index', $data);

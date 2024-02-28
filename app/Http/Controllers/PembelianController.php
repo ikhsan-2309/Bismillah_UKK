@@ -13,8 +13,8 @@ class PembelianController extends Controller
     public function index()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/pembelian', 'label' => 'Pembelian'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'pembelian.index', 'label' => 'Pembelian'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Manage Pembelian';
@@ -34,10 +34,10 @@ class PembelianController extends Controller
                 return format_uang($pembelian->total_item);
             })
             ->addColumn('total_harga', function ($pembelian) {
-                return 'Rp. ' . format_uang($pembelian->total_harga);
+                return format_uang($pembelian->total_harga);
             })
             ->addColumn('bayar', function ($pembelian) {
-                return 'Rp. ' . format_uang($pembelian->bayar);
+                return format_uang($pembelian->bayar);
             })
             ->addColumn('tanggal', function ($pembelian) {
                 return tanggal_indonesia($pembelian->created_at, false);
@@ -46,13 +46,17 @@ class PembelianController extends Controller
                 return $pembelian->supplier->nama;
             })
             ->editColumn('diskon', function ($pembelian) {
-                return $pembelian->diskon . '%';
+                return $pembelian->diskon;
             })
             ->addColumn('aksi', function ($pembelian) {
                 return '
                 <div class="btn-group">
-                    <button onclick="showDetail(`' . route('pembelian.show', $pembelian->id_pembelian) . '`)" class="btn btn-xs btn-info btn-flat"><i class="bi bi-eye-fill text-white"></i></button>
-                    <button onclick="deleteData(`' . route('pembelian.destroy', $pembelian->id_pembelian) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="bi bi-trash"></i></button>
+                    <button onclick="showDetail(`' . route('pembelian.show', $pembelian->id_pembelian) . '`)" class="btn btn-sm btn-info btn-flat p-2">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                    <button onclick="deleteData(`' . route('pembelian.destroy', $pembelian->id_pembelian) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
                 </div>
                 ';
             })
@@ -103,7 +107,7 @@ class PembelianController extends Controller
             ->of($detail)
             ->addIndexColumn()
             ->addColumn('kode_produk', function ($detail) {
-                return '<span class="badge bg-light-success">' . $detail->produk->kode_produk . '</span>';
+                return '<span class="badge badge-success">' . $detail->produk->kode_produk . '</span>';
             })
             ->addColumn('nama_produk', function ($detail) {
                 return $detail->produk->nama_produk;

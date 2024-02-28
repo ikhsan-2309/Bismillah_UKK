@@ -12,8 +12,8 @@ class LaporanController extends Controller
     public function index(Request $request)
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/report', 'label' => 'Report'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'laporan.index', 'label' => 'Report'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Report';
@@ -60,7 +60,7 @@ class LaporanController extends Controller
             'tanggal' => '',
             'penjualan' => '',
             'pembelian' => '',
-            'pendapatan' => format_uang($total_pendapatan),
+            'pendapatan' => 'Total : ' . format_uang($total_pendapatan),
         ];
 
         return $data;
@@ -80,7 +80,7 @@ class LaporanController extends Controller
         $data = $this->getData($awal, $akhir);
         $pdf  = PDF::loadView('admin.laporan.pdf', compact('awal', 'akhir', 'data'));
         $pdf->setPaper('a4', 'potrait');
-        
-        return $pdf->stream('Laporan-pendapatan-'. date('Y-m-d-his') .'.pdf');
+
+        return $pdf->stream('Laporan-pendapatan-' . date('Y-m-d-his') . '.pdf');
     }
 }

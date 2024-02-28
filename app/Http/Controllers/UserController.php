@@ -11,8 +11,8 @@ class UserController extends Controller
     public function index()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/user', 'label' => 'User'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'user.index', 'label' => 'User'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Manage User';

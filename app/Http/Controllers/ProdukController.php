@@ -18,8 +18,8 @@ class ProdukController extends Controller
     public function index()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/products', 'label' => 'Products'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'produk.index', 'label' => 'Products'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Manage Products';
@@ -51,7 +51,7 @@ class ProdukController extends Controller
                 <div class="d-flex align-items-center">
                   <img src="../../../../storage/images/produk/' . $produk->gambar_produk . '" alt="profile" />
                   <div class="ms-3">
-                    <p class="mb-0">' . $produk->nama_produk . '</p>
+                    <p class="mb-0 tippy">' . $produk->nama_produk . '</p>
                     <p class="mb-0 text-muted text-small">' . $produk->nama_kategori . '</p>
                   </div>
                 </div>
@@ -69,12 +69,12 @@ class ProdukController extends Controller
             ->addColumn('aksi', function ($produk) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('produk.update', $produk->id_produk) . '`)" class="btn btn-sm btn-info btn-flat p-2">
+                    <a onclick="editForm(`' . route('produk.update', $produk->id_produk) . '`)" class="btn btn-sm btn-info btn-flat p-2">
                         <i class="fa-regular fa-pen-to-square"></i>
-                    </button>
-                    <button onclick="deleteData(`' . route('produk.destroy', $produk->id_produk) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+                    </a>
+                    <a onclick="deleteData(`' . route('produk.destroy', $produk->id_produk) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
                         <i class="fa-regular fa-trash-can"></i>
-                    </button>
+                    </a>
                 </div>
                 ';
             })
@@ -160,7 +160,7 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         $produk = Produk::find($id);
-    
+
         // Hapus gambar lama jika ada gambar yang baru diunggah
         if ($request->hasFile('gambar_produk')) {
             Storage::delete('public/images/produk/' . $produk->gambar_produk);
@@ -168,7 +168,7 @@ class ProdukController extends Controller
             $imagePath = $request->file('gambar_produk')->storeAs('public/images/produk', $imageName);
             $produk->gambar_produk = $imageName; // Masukkan nama gambar ke dalam model
         }
-    
+
         // Perbarui produk
         $produk->update([
             'id_kategori' => $request->id_kategori,
@@ -181,10 +181,10 @@ class ProdukController extends Controller
             'harga_jual' => $request->harga_jual,
             'stok' => $request->stok,
         ]);
-    
+
         return response()->json('Data berhasil disimpan', 200);
     }
-    
+
 
 
     public function destroy($id)

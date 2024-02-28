@@ -17,8 +17,8 @@ class MemberController extends Controller
     public function index()
     {
         $data['breadcrumb_items'] = [
-            ['link' => '/dashboard', 'label' => 'Dashboard'],
-            ['link' => '/member', 'label' => 'Member'],
+            ['link' => 'dashboard', 'label' => 'Dashboard'],
+            ['link' => 'member.index', 'label' => 'Member'],
             // Add more items as needed
         ];
         $data['page_title'] = 'Manage Member';
@@ -38,17 +38,17 @@ class MemberController extends Controller
                 ';
             })
             ->addColumn('kode_member', function ($member) {
-                return '<span class="badge bg-light-success">' . $member->kode_member . '</span>';
+                return '<span class="badge badge-success">' . $member->kode_member . '</span>';
             })
             ->addColumn('aksi', function ($member) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('member.update', $member->id_member) . '`)" class="btn btn-sm btn-info btn-flat p-2">
+                    <a onclick="editForm(`' . route('member.update', $member->id_member) . '`)" class="btn btn-sm btn-info btn-flat p-2">
                         <i class="fa-regular fa-pen-to-square"></i>
-                    </button>
-                    <button onclick="deleteData(`' . route('member.destroy', $member->id_member) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
+                    </a>
+                    <a onclick="deleteData(`' . route('member.destroy', $member->id_member) . '`)" class="btn btn-sm btn-danger btn-flat p-2">
                         <i class="fa-regular fa-trash-can"></i>
-                    </button>
+                    </a>
                 </div>
                 ';
             })
@@ -149,7 +149,7 @@ class MemberController extends Controller
         $setting    = Setting::first();
 
         $no  = 1;
-        $pdf = PDF::loadView('admin.member.cetak', compact('datamember', 'no'));
+        $pdf = PDF::loadView('admin.member.cetak', compact('datamember', 'no', 'setting'));
         $pdf->setPaper(array(0, 0, 566.93, 850.39), 'potrait');
         return $pdf->stream('member.pdf');
     }

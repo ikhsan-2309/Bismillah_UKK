@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Kategori;
+use App\Models\Produk;
+use App\Models\Member;
+use App\Models\Supplier;
+use App\Models\Penjualan;
+use App\Models\Pembelian;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -39,7 +45,36 @@ class HomeController extends Controller
             // Add more items as needed
         ];
         $data['page_title'] = 'Dashboard';
-        return view('admin.index',$data);
+        $kategori = Kategori::count();
+        $produk = Produk::count();
+        $supplier = Supplier::count();
+        $member = Member::count();
+
+        $tanggal_awal = date('Y-m-01');
+        $tanggal_akhir = date('Y-m-d');
+
+        $data_tanggal = array();
+        $data_pendapatan = array();
+
+        while (strtotime($tanggal_awal) <= strtotime($tanggal_akhir)) {
+            $data_tanggal[] = (int) substr($tanggal_awal, 8, 2);
+
+            $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('bayar');
+            $total_pembelian = Pembelian::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('bayar');
+
+            $pendapatan = $total_penjualan - $total_pembelian;
+            $data_pendapatan[] += $pendapatan;
+
+            $tanggal_awal = date('Y-m-d', strtotime("+1 day", strtotime($tanggal_awal)));
+        }
+
+        $tanggal_awal = date('Y-m-01');
+
+        if (auth()->user()->role == 1 | 2) {
+            return view('admin.index', $data, compact('kategori', 'produk', 'supplier', 'member', 'tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
+        } else {
+            return view('admin.kasir', $data);
+        }
     }
 
     /**

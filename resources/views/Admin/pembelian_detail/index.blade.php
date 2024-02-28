@@ -1,121 +1,152 @@
 @extends('admin.layouts.app')
+@push('css')
+  <style>
+    .tampil-bayar {
+      font-size: 5em;
+      text-align: center;
+      height: 120px;
+    }
+
+    .tampil-terbilang {
+      padding: 10px;
+      background: #f0f0f0;
+    }
+
+
+    @media(max-width: 768px) {
+      .tampil-bayar {
+        font-size: 3em;
+        height: 70px;
+        padding-top: 5px;
+      }
+    }
+
+    @media(max-width: 425px) {
+      .tampil-bayar {
+        font-size: 2em;
+        height: 60px;
+        padding-top: 5px;
+      }
+    }
+  </style>
+@endpush
 @section('content')
-  <section class="section">
-    <div class="card">
-      <div class="card-header">
-        <h6 class="card-title">
-          <table>
-            <tr>
-              <td>Supplier</td>
-              <td>: {{ $supplier->nama }}</td>
-            </tr>
-            <tr>
-              <td>Telepon</td>
-              <td>: {{ $supplier->telepon }}</td>
-            </tr>
-            <tr>
-              <td>Alamat</td>
-              <td>: {{ $supplier->alamat }}</td>
-            </tr>
-          </table>
-        </h6>
-        <div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <form class="form-produk">
-                @csrf
-                <div class="row">
-                  <div class="col-md-6 mb-1">
-                    <div class="input-group mb-3">
-                      <label for="code-product" class="ml-0 m-2">Code Product</label>
-                      <input type="hidden" name="id_pembelian" id="id_pembelian" value="{{ $id_pembelian }}">
-                      <input type="hidden" name="id_produk" id="id_produk">
-                      <input type="text" class="form-control" id="code-product" placeholder="Code Product"
-                        aria-label="Code Product" aria-describedby="button-addon2">
-                      <button class="btn btn-outline-primary" onclick="tampilProduk()" type="button"
-                        id="button-addon2"><i class="bi bi-search"></i></button>
-                    </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">
+        <form class="form-produk">
+          @csrf
+          <div class="row">
+            <div class="col-12 mb-1">
+              <div class="row">
+                <div class="col-6">
+                  <h6>Supplier : {{ $supplier->nama }}</h6>
+                  <h6>Telepon : {{ $supplier->telepon }}</h6>
+                  <h6>Alamat : {{ $supplier->alamat }}</h6>
+                </div>
+                <div class="col-6">
+                  <div class="input-group mb-3">
+                    <label for="code-product">
+                      <h6 class="ml-0 m-3">Code Product</h6>
+                    </label>
+                    <input type="hidden" name="id_pembelian" id="id_pembelian" value="{{ $id_pembelian }}">
+                    <input type="hidden" name="id_produk" id="id_produk">
+                    <input type="text" class="form-control" id="code-product" placeholder="Code Product"
+                      aria-label="Code Product" aria-describedby="button-addon2">
+                    <button class="btn btn-primary" onclick="tampilProduk()" type="button" id="button-addon2"><i
+                        class="fa-solid fa-magnifying-glass"></i></button>
                   </div>
                 </div>
-              </form>
-              <table class="table-pembelian" id="table-pembelian">
-                <thead>
-                  <th width="5%">No</th>
-                  <th>Kode</th>
-                  <th>Nama</th>
-                  <th>Harga</th>
-                  <th width="15%">Jumlah</th>
-                  <th>Subtotal</th>
-                  <th width="5%" class="text-center"><i class="bi bi-gear"></i></th>
-                </thead>
-              </table>
-            </div>
-            <div class="row mt-3">
-              <div class="col-lg-6">
-                <div class="tampil-bayar bg-primary"></div>
-                <div class="tampil-terbilang"></div>
-              </div>
-              <div class="col-lg-6">
-                <form action="{{ route('pembelian.store') }}" class="form-pembelian" method="post">
-                  @csrf
-                  <input type="hidden" name="id_pembelian" value="{{ $id_pembelian }}">
-                  <input type="hidden" name="total" id="total">
-                  <input type="hidden" name="total_item" id="total_item">
-                  <input type="hidden" name="bayar" id="bayar">
-                  <div class="form-group row">
-                    <label for="totalrp" class="col-lg-2 control-label">Total</label>
-                    <div class="col-lg-8">
-                      <input type="text" id="totalrp" class="form-control" readonly>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="diskon" class="col-lg-2 control-label">Diskon</label>
-                    <div class="col-lg-8">
-                      <input type="number" name="diskon" id="diskon" class="form-control"
-                        value="{{ $diskon }}">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="bayar" class="col-lg-2 control-label">Bayar</label>
-                    <div class="col-lg-8">
-                      <input type="text" id="bayarrp" class="form-control">
-                    </div>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
-          <div class="box-footer">
-            <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan float-end"><i
-                class="fa fa-floppy-o"></i>
-              Simpan Transaksi</button>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table" id="table-pembelian">
+              <thead>
+                <th class="text-center" width="5%">No</th>
+                <th>Kode</th>
+                <th>Nama</th>
+                <th class="text-center">Harga (Rp)</th>
+                <th class="text-center" width="10%">Jumlah</th>
+                <th class="text-center">Subtotal (Rp)</th>
+                <th width="5%" class="text-center"><i class="fa fa-cog"></i></th>
+              </thead>
+            </table>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-6">
+            <div class="tampil-bayar bg-primary text-white"></div>
+            <div class="tampil-terbilang text-center"></div>
+          </div>
+          <div class="col-lg-6">
+            <form action="{{ route('pembelian.store') }}" class="form-pembelian" method="post">
+              @csrf
+              <input type="hidden" name="id_pembelian" value="{{ $id_pembelian }}">
+              <input type="hidden" name="total" id="total">
+              <input type="hidden" name="total_item" id="total_item">
+              <input type="hidden" name="bayar" id="bayar">
+              <div class="form-group row">
+                <label for="totalrp" class="col-lg-3 control-label mt-2">Total</label>
+                <div class="col-lg-9">
+                  <input type="text" id="totalrp" class="form-control" readonly>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="diskon" class="col-lg-3 control-label">Diskon</label>
+                <div class="col-lg-9">
+                  <input type="number" name="diskon" id="diskon" class="form-control" value="{{ $diskon }}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="bayar" class="col-lg-3 control-label">Bayar</label>
+                <div class="col-lg-9">
+                  <input type="text" id="bayarrp" class="form-control">
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-  </section>
-  <div class="modal modal-lg text-left" id="modal-produk" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+      <div class="box-footer">
+        <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan float-end"><i
+            class="fa fa-floppy-disk"></i> Simpan Transaksi</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-produk" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-body">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-formLabel">Pilih Product</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body pt-1">
           <div class="table-responsive">
-            <table class="table-produk" id="table-produk">
+            <table class="table" id="table-produk">
               <thead>
-                <th width="5%">No</th>
-                <th>Kode</th>
+                <th width="5%" class="text-center">No</th>
+                <th width="10%">Kode</th>
                 <th>Nama</th>
-                <th>Harga Beli</th>
-                <th><i class="fa fa-cog"></i></th>
+                <th class="text-center">Harga Beli (Rp)</th>
+                <th width="5%" class="text-center"><i class="fa fa-cog"></i></th>
               </thead>
               <tbody>
                 @foreach ($produk as $key => $item)
                   <tr>
-                    <td width="5%">{{ $key + 1 }}</td>
-                    <td><span class="badge bg-light-success">{{ $item->kode_produk }}</span></td>
+                    <td width="5%" class="text-center">{{ $key + 1 }}</td>
+                    <td width="10%"><span class="badge badge-success">{{ $item->kode_produk }}</span></td>
                     <td>{{ $item->nama_produk }}</td>
-                    <td>{{ $item->harga_beli }}</td>
-                    <td>
-                      <a href="#" class="btn btn-primary btn-xs btn-flat"
+                    <td class="text-center">{{ $item->harga_beli }}</td>
+                    <td width="5%" class="text-center">
+                      <a href="#" class="btn btn-primary"
                         onclick="pilihProduk('{{ $item->id_produk }}', '{{ $item->kode_produk }}')">
                         <i class="fa fa-check-circle"></i>
                         Pilih
@@ -131,15 +162,14 @@
     </div>
   </div>
 @endsection
-
 @push('scripts')
   <script>
     let table, table2;
 
     $(function() {
-      $('body').addClass('sidebar-collapse');
+      $('body').addClass('sidebar-icon-only');
 
-      table = $('.table-pembelian').DataTable({
+      table = $('#table-pembelian').DataTable({
           responsive: true,
           processing: true,
           serverSide: true,
@@ -150,7 +180,8 @@
           columns: [{
               data: 'DT_RowIndex',
               searchable: false,
-              sortable: false
+              sortable: false,
+              class: 'text-center'
             },
             {
               data: 'kode_produk'
@@ -159,13 +190,16 @@
               data: 'nama_produk'
             },
             {
-              data: 'harga_beli'
+              data: 'harga_beli',
+              class: 'text-center',
             },
             {
-              data: 'jumlah'
+              data: 'jumlah',
+              class: 'text-center'
             },
             {
-              data: 'subtotal'
+              data: 'subtotal',
+              class: 'text-center',
             },
             {
               data: 'aksi',
@@ -179,9 +213,10 @@
         })
         .on('draw.dt', function() {
           loadForm($('#diskon').val());
-          $('.table-pembelian tbody tr:last-child').hide();
+          $('#table-pembelian tbody tr:last-child').hide();
+          $('#table-pembelian tbody tr td').css('padding', '5px');
         });
-      table2 = $('.table-produk').DataTable();
+      table2 = $('#table-produk').DataTable();
 
       $(document).on('input', '.quantity', function() {
         let id = $(this).data('id');

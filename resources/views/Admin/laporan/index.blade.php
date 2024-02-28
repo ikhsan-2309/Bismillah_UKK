@@ -7,9 +7,16 @@
     <div class="card-body">
       <div class="card-title mb-3 d-flex justify-content-between align-items-center">
         <h4 class="card-title me-auto">List Categories</h4>
-        <div class="d-flex"> <a href="{{ route('laporan.export_pdf', [$tanggalAwal, $tanggalAkhir]) }}" target="_blank"
-            class="btn btn-outline-success btn-sm m-2 mt-0">Export PDF</a>
-          <button class="btn btn-outline-primary btn-sm m-2 mt-0 mr-0" onclick="updatePeriode()">Ubah Periode</button>
+        <div class="d-flex">
+          <a href="{{ route('laporan.export_pdf', [$tanggalAwal, $tanggalAkhir]) }}" target="_blank"
+            class="btn btn-success btn-sm m-2 mt-0">
+            <i class="fas fa-file-pdf mr-2"></i>
+            Export PDF
+          </a>
+          <button class="btn btn-primary btn-sm m-2 mt-0 mr-0" onclick="updatePeriode()">
+            <i class="fas fa-calendar-alt mr-2"></i>
+            Ubah Periode
+          </button>
         </div>
       </div>
       <div class="row">
@@ -19,9 +26,9 @@
               <thead>
                 <th class="text-center" width="5%">No</th>
                 <th class="text-center">Tanggal</th>
-                <th class="text-center">Penjualan ($)</th>
-                <th class="text-center">Pembelian ($)</th>
-                <th class="text-center">Pendapatan ($)</th>
+                <th class="text-center">Penjualan (Rp)</th>
+                <th class="text-center">Pembelian (Rp)</th>
+                <th class="text-center">Pendapatan (Rp)</th>
               </thead>
             </table>
           </div>
