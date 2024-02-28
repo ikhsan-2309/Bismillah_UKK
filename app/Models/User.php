@@ -62,6 +62,6 @@ class User extends Authenticatable
 
     public function scopeIsNotAdmin($query)
     {
-        return $query->where('role', '!=', 1);
+        return $query->where('role', '=', 0);
     }
 }
