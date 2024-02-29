@@ -66,7 +66,7 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="mt-3 d-flex justify-content-end">
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
             </div>

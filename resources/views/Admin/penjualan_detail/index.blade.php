@@ -101,33 +101,33 @@
             <input type="hidden" name="id_member" id="id_member" value="{{ $memberSelected->id_member }}">
 
             <div class="form-group row">
-              <label for="totalrp" class="col-lg-4 control-label">Total</label>
+              <label for="totalrp" class="col-lg-4 control-label mt-3">Total</label>
               <div class="col-lg-8">
                 <input type="text" id="totalrp" class="form-control" readonly>
               </div>
             </div>
             <div class="form-group row">
-              <label for="diskon" class="col-lg-4 control-label">Diskon</label>
+              <label for="diskon" class="col-lg-4 control-label mt-3">Diskon</label>
               <div class="col-lg-8">
                 <input type="number" name="diskon" id="diskon" class="form-control"
                   value="{{ !empty($memberSelected->id_member) ? $diskon : 0 }}" readonly>
               </div>
             </div>
             <div class="form-group row">
-              <label for="bayar" class="col-lg-4 control-label">Bayar</label>
+              <label for="bayar" class="col-lg-4 control-label mt-3">Bayar</label>
               <div class="col-lg-8">
                 <input type="text" id="bayarrp" class="form-control" readonly>
               </div>
             </div>
             <div class="form-group row">
-              <label for="diterima" class="col-lg-4 control-label">Diterima</label>
+              <label for="diterima" class="col-lg-4 control-label mt-3">Diterima</label>
               <div class="col-lg-8">
                 <input type="number" id="diterima" class="form-control" name="diterima"
                   value="{{ $penjualan->diterima ?? 0 }}">
               </div>
             </div>
             <div class="form-group row">
-              <label for="kembali" class="col-lg-4 control-label">Kembali</label>
+              <label for="kembali" class="col-lg-4 control-label mt-3">Kembali</label>
               <div class="col-lg-8">
                 <input type="text" id="kembali" name="kembali" class="form-control" value="0" readonly>
               </div>
@@ -199,7 +199,7 @@
         </div>
         <div class="modal-body pt-1">
           <div class="table-responsive">
-            <table class="table" id="table-member">
+            <table class="table table-sup" id="table-member">
               <thead>
                 <th width="5%">No</th>
                 <th>Nama</th>
@@ -334,6 +334,7 @@
       $(document).on('input', '.quantity', function() {
         let id = $(this).data('id');
         let jumlah = parseInt($(this).val());
+        let stok = parseInt($(this).data('stok'));
 
         if (jumlah < 1) {
           $(this).val(1);
@@ -343,6 +344,11 @@
         if (jumlah > 10000) {
           $(this).val(10000);
           alert('Jumlah tidak boleh lebih dari 10000');
+          return;
+        }
+        if (jumlah > stok) {
+          $(this).val(stok); // Set quantity to available stock
+          alert('Stock produk tidak mencukupi!');
           return;
         }
 
@@ -361,7 +367,6 @@
             return;
           });
       });
-
       $(document).on('input', '#diskon', function() {
         if ($(this).val() == "") {
           $(this).val(0).select();
@@ -369,7 +374,6 @@
 
         loadForm($(this).val());
       });
-
       $('#diterima').on('input', function() {
         if ($(this).val() == "") {
           $(this).val(0).select();
@@ -383,10 +387,7 @@
       $('.btn-simpan').on('click', function() {
         const total = parseFloat($('#total').val());
         const diterima = parseFloat($('#diterima').val());
-
         if (diterima >= total) {
-          // Uang yang dibayarkan cukup
-          // Jalankan proses submit form
           $('.form-penjualan').submit();
         } else {
           alert('Uang yang diterima kurang');
@@ -467,13 +468,13 @@
           $('#totalrp').val('Rp. ' + response.totalrp);
           $('#bayarrp').val('Rp. ' + response.bayarrp);
           $('#bayar').val(response.bayar);
-          $('.tampil-bayar').text('Bayar: Rp. ' + response.bayarrp);
+          $('.tampil-bayar').text('Bayar : Rp. ' + response.bayarrp);
           $('.tampil-terbilang').text(response.terbilang);
           $('#table-penjualan tbody tr:last-child').hide();
           $('.quantity').css('width', '120px');
           $('#kembali').val('Rp.' + response.kembalirp);
           if ($('#diterima').val() != 0) {
-            $('.tampil-bayar').text('Kembali: Rp. ' + response.kembalirp);
+            $('.tampil-bayar').text('Kembali : Rp. ' + response.kembalirp);
             $('.tampil-terbilang').text(response.kembali_terbilang);
           }
         })

@@ -6,7 +6,7 @@
   <div class="card">
     <div class="card-body">
       <div class="card-title mb-3 d-flex justify-content-between align-items-center">
-        <h4 class="card-title me-auto">List Categories</h4>
+        <h4 class="card-title me-auto">List Products</h4>
         <div class="d-flex">
           <button type="button" class="btn btn-danger btn-icon-text btn-sm mt-2 mb-2"
             onclick="deleteSelected('{{ route('produk.delete_selected') }}')">
@@ -46,7 +46,7 @@
                   <th>Harga Jual (Rp)</th>
                   <th>Diskon (%)</th>
                   <th>Stok</th>
-                  <th width="5%">Action</th>
+                  <th class="text-center" width="5%"><i class="fa fa-cog"></i></th>
                 </thead>
               </table>
             </form>
@@ -73,13 +73,13 @@
                 <div class="row">
                   <div class="mt-2">
                     <label for="nama_produk">Product Name</label>
-                    <input type="text" id="nama_produk" class="form-control" name="nama_produk"
+                    <input type="text" id="nama_produk" class="form-control mt-2" name="nama_produk"
                       placeholder="Product Name" required autofocus>
                     <span class="help-block with-errors"></span>
                   </div>
                   <div class="mt-2">
                     <label for="id_kategori">Category Name</label>
-                    <select name="id_kategori" id="id_kategori" class="form-control" required>
+                    <select name="id_kategori" id="id_kategori" class="form-control mt-2" required>
                       <option value="">--Pilih Kategori--</option>
                       @foreach ($kategori as $key => $item)
                         <option value="{{ $key }}">{{ $item }}</option>
@@ -99,7 +99,7 @@
                     <label for="gambar_produk">Gambar Produk</label>
                   </div>
                   <div class="mt-2">
-                    <input type="file" id="gambar_produk" name="gambar_produk" class="dropify" data-default-file="">
+                    <input type="file" id="gambar_produk" name="gambar_produk" class="dropify">
                   </div>
                   <div class="mt-2">
                     <label for="harga_beli">Harga Beli</label>
@@ -135,7 +135,7 @@
                   </div>
                 </div>
               </div>
-              <div class="modal-footer">
+              <div class="mt-3 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
               </div>
@@ -199,7 +199,8 @@
         columns: [{
             data: 'select_all',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center'
           },
           {
             data: 'DT_RowIndex',

@@ -40,9 +40,9 @@
             <div class="col-12 mb-1">
               <div class="row">
                 <div class="col-6">
-                  <h6>Supplier : {{ $supplier->nama }}</h6>
-                  <h6>Telepon : {{ $supplier->telepon }}</h6>
-                  <h6>Alamat : {{ $supplier->alamat }}</h6>
+                  <h6>Supplier&nbsp; :&nbsp;&nbsp;{{ $supplier->nama }}</h6>
+                  <h6>Telepon&nbsp;&nbsp; :&nbsp;&nbsp;{{ $supplier->telepon }}</h6>
+                  <h6>Alamat&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;{{ $supplier->alamat }}</h6>
                 </div>
                 <div class="col-6">
                   <div class="input-group mb-3">
@@ -91,19 +91,19 @@
               <input type="hidden" name="total_item" id="total_item">
               <input type="hidden" name="bayar" id="bayar">
               <div class="form-group row">
-                <label for="totalrp" class="col-lg-3 control-label mt-2">Total</label>
+                <label for="totalrp" class="col-lg-3 control-label mt-3 ">Total</label>
                 <div class="col-lg-9">
                   <input type="text" id="totalrp" class="form-control" readonly>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="diskon" class="col-lg-3 control-label">Diskon</label>
+                <label for="diskon" class="col-lg-3 control-label mt-3">Diskon</label>
                 <div class="col-lg-9">
                   <input type="number" name="diskon" id="diskon" class="form-control" value="{{ $diskon }}">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="bayar" class="col-lg-3 control-label">Bayar</label>
+                <label for="bayar" class="col-lg-3 control-label mt-3">Bayar</label>
                 <div class="col-lg-9">
                   <input type="text" id="bayarrp" class="form-control">
                 </div>

@@ -6,12 +6,12 @@
       <div class="card-title mb-3 d-flex justify-content-between align-items-center">
         <h4 class="card-title me-auto">List Transactions</h4>
         <div class="d-flex">
-          @empty(!session('id_penjualan'))
+          {{-- @empty(!session('id_penjualan'))
             <a href="{{ route('transaksi.index') }}" class="btn btn-success btn-icon-text btn-sm m-2">
               <i class="fa-solid fa-history btn-icon-prepend"></i>
               Last Transaction
             </a>
-          @endempty
+          @endempty --}}
           <a href="{{ route('transaksi.baru') }}" class="btn btn-primary btn-icon-text btn-sm mt-2 mb-2">
             <i class="fa-solid fa-plus btn-icon-prepend"></i>
             Transaction

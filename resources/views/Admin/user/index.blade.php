@@ -40,38 +40,38 @@
             @method('post')
             <div class="form-body">
               <div class="row">
-                <div class="">
+                <div class="mt-2">
                   <label for="name">Name</label>
                 </div>
-                <div class="">
+                <div class="mt-2">
                   <input type="text" id="name" class="form-control" name="name" required autofocus>
                   <span class="help-block with-errors"></span>
                 </div>
-                <div class="mt-3">
+                <div class="mt-2">
                   <label for="email">Email</label>
                 </div>
-                <div class="">
+                <div class="mt-2">
                   <input type="email" id="email" class="form-control" name="email" required>
                   <span class="help-block with-errors"></span>
                 </div>
-                <div class="mt-3">
+                <div class="mt-2">
                   <label for="password">Password</label>
                 </div>
-                <div class="">
+                <div class="mt-2">
                   <input type="password" id="password" class="form-control" name="password" required>
                   <span class="help-block with-errors"></span>
                 </div>
-                <div class="mt-3">
+                <div class="mt-2">
                   <label for="password_confirmation">Konfirmasi Password</label>
                 </div>
-                <div class="">
+                <div class="mt-2">
                   <input type="password" name="password_confirmation" id="password_confirmation" class="form-control"
                     required data-match="#password">
                   <span class="help-block with-errors"></span>
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="mt-3 d-flex justify-content-end">
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
             </div>

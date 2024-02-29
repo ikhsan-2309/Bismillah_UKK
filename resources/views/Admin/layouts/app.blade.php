@@ -9,6 +9,12 @@
   <title>Laraten - Admin</title>
   @include('Admin.shared.css')
   @stack('css')
+  @if (session('error'))
+    <script>
+      alert('{{ session('error') }}');
+    </script>
+  @endif
+
   <!-- base:css -->
 </head>
 

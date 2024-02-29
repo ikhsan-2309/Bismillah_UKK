@@ -46,10 +46,10 @@
             @method('post')
             <div class="form-body">
               <div class="row">
-                <div class="">
+                <div class="mt-2">
                   <label for="first-name-horizontal">Category Name</label>
                 </div>
-                <div class="mt-3">
+                <div class="mt-2">
                   <input type="text" id="nama_kategori" class="form-control has-valiadtion" name="nama_kategori"
                     placeholder="Category Name" required autofocus>
                   <div class="invalid-feedback">
@@ -58,7 +58,7 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="mt-3 d-flex justify-content-end">
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
             </div>

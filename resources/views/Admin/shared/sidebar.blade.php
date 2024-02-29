@@ -23,7 +23,7 @@
       </li>
       <li class="nav-item {{ request()->routeIs('pembelian.index', 'pembelian_detail.index') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('pembelian.index') }}">
-          <i class="fa fa-shopping-cart menu-icon"></i> <span class="menu-title">Pembelian</span>
+          <i class="fa fa-shopping-cart menu-icon"></i> <span class="menu-title">Purchase</span>
         </a>
       </li>
     @endif
@@ -38,7 +38,7 @@
     @if (auth()->user()->role == 1)
       <li class="nav-item {{ request()->routeIs('member.index') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('member.index') }}">
-          <i class="fa fa-users menu-icon"></i> <span class="menu-title">Member</span>
+          <i class="fa fa-users menu-icon"></i> <span class="menu-title">Members</span>
         </a>
       </li>
       <li class="nav-item {{ request()->routeIs('supplier.index') ? 'active' : '' }}">

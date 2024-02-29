@@ -6,7 +6,7 @@
   <div class="card">
     <div class="card-body">
       <div class="card-title mb-3 d-flex justify-content-between align-items-center">
-        <h4 class="card-title me-auto">List Categories</h4>
+        <h4 class="card-title me-auto">List Income</h4>
         <div class="d-flex">
           <a href="{{ route('laporan.export_pdf', [$tanggalAwal, $tanggalAkhir]) }}" target="_blank"
             class="btn btn-success btn-sm m-2 mt-0">
@@ -46,10 +46,10 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body pt-1">
+        <div class="modal-body pt-1 mt-2">
           <form action="{{ route('laporan.index') }}" method="get" data-toggle="validator" class="form form-horizontal">
             <div class="form-group row">
-              <label for="tanggal_awal" class="col-lg-4 col-lg-offset-1 control-label">Tanggal Awal</label>
+              <label for="tanggal_awal" class="col-lg-4 col-lg-offset-1 mt-3">Tanggal Awal</label>
               <div class="col-lg-8">
                 <input type="text" name="tanggal_awal" id="tanggal_awal" class="form-control flatpickr" required
                   autofocus value="{{ request('tanggal_awal') }}" style="border-radius: 0 !important;">
@@ -57,14 +57,14 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="tanggal_akhir" class="col-lg-4 col-lg-offset-1 control-label">Tanggal Akhir</label>
+              <label for="tanggal_akhir" class="col-lg-4 col-lg-offset-1 mt-3">Tanggal Akhir</label>
               <div class="col-lg-8">
                 <input type="text" name="tanggal_akhir" id="tanggal_akhir" class="form-control flatpickr" required
                   value="{{ request('tanggal_akhir') ?? date('Y-m-d') }}" style="border-radius: 0 !important;">
                 <span class="help-block with-errors"></span>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="mt-3 d-flex justify-content-end">
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
             </div>

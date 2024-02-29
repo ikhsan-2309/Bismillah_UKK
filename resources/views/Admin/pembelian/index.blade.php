@@ -4,17 +4,17 @@
   <div class="card">
     <div class="card-body">
       <div class="card-title mb-3 d-flex justify-content-between align-items-center">
-        <h4 class="card-title me-auto">List Categories</h4>
+        <h4 class="card-title me-auto">List Purchases</h4>
         <div class="d-flex">
           @empty(!session('id_pembelian'))
             <a href="{{ route('pembelian_detail.index') }}"" class="btn btn-success btn-icon-text btn-sm m-2">
               <i class="fa-solid fa-history btn-icon-prepend"></i>
-              Last Transaction
+              Last Purchase
             </a>
           @endempty
           <button type="button" class="btn btn-primary btn-icon-text btn-sm mt-2 mb-2" onclick="addForm()">
             <i class="fa-solid fa-plus btn-icon-prepend"></i>
-            Transaction
+            Purchase
           </button>
         </div>
       </div>
@@ -71,7 +71,7 @@
         </div>
         <div class="modal-body pt-1">
           <div class="table-responsive">
-            <table class="table" id="table">
+            <table class="table table-sup" id="table">
               <thead>
                 <th width="5%">No</th>
                 <th>Nama</th>

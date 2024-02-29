@@ -19,7 +19,7 @@ class PenjualanController extends Controller
             // Add more items as needed
         ];
         $data['page_title'] = 'Penjualan';
-        return view('admin.penjualan.index',$data);
+        return view('admin.penjualan.index', $data);
     }
 
     public function data()
@@ -43,7 +43,7 @@ class PenjualanController extends Controller
             })
             ->addColumn('kode_member', function ($penjualan) {
                 $member = $penjualan->member->kode_member ?? 'none';
-                return '<span class="badge badge-success">'. $member .'</span>';
+                return '<span class="badge badge-success">' . $member . '</span>';
             })
             ->editColumn('diskon', function ($penjualan) {
                 return $penjualan->diskon;
@@ -100,6 +100,9 @@ class PenjualanController extends Controller
             $item->update();
 
             $produk = Produk::find($item->id_produk);
+            if ($item->jumlah > $produk->stok) {
+                return redirect()->back()->with('error', 'Stok produk ' . $produk->nama_produk . ' tidak mencukupi!');
+            }
             $produk->stok -= $item->jumlah;
             $produk->update();
         }
@@ -114,7 +117,7 @@ class PenjualanController extends Controller
             ->of($detail)
             ->addIndexColumn()
             ->addColumn('kode_produk', function ($detail) {
-                return '<span class="badge badge-success">'. $detail->produk->kode_produk .'</span>';
+                return '<span class="badge badge-success">' . $detail->produk->kode_produk . '</span>';
             })
             ->addColumn('nama_produk', function ($detail) {
                 return $detail->produk->nama_produk;
@@ -169,13 +172,13 @@ class PenjualanController extends Controller
     {
         $setting = Setting::first();
         $penjualan = Penjualan::find(session('id_penjualan'));
-        if (! $penjualan) {
+        if (!$penjualan) {
             abort(404);
         }
         $detail = PenjualanDetail::with('produk')
             ->where('id_penjualan', session('id_penjualan'))
             ->get();
-        
+
         return view('admin.penjualan.nota_kecil', compact('setting', 'penjualan', 'detail'));
     }
 
@@ -183,7 +186,7 @@ class PenjualanController extends Controller
     {
         $setting = Setting::first();
         $penjualan = Penjualan::find(session('id_penjualan'));
-        if (! $penjualan) {
+        if (!$penjualan) {
             abort(404);
         }
         $detail = PenjualanDetail::with('produk')
@@ -191,7 +194,7 @@ class PenjualanController extends Controller
             ->get();
 
         $pdf = PDF::loadView('penjualan.nota_besar', compact('setting', 'penjualan', 'detail'));
-        $pdf->setPaper(0,0,609,440, 'potrait');
-        return $pdf->stream('Transaksi-'. date('Y-m-d-his') .'.pdf');
+        $pdf->setPaper(0, 0, 609, 440, 'potrait');
+        return $pdf->stream('Transaksi-' . date('Y-m-d-his') . '.pdf');
     }
 }

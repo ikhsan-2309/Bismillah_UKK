@@ -14,28 +14,25 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Hashing passwords for security
-        $managerPassword = Hash::make('password');
-        $adminPassword = Hash::make('password');
-        $cashierPassword = Hash::make('password');
+        $password = '123'; // Replace with your desired password
 
         DB::table('users')->insert([
             [
                 'name' => 'Manager',
                 'email' => 'manager@example.com',
-                'password' => $managerPassword,
+                'password' => Hash::make($password), // Hash the password
                 'role' => 2, // Manager role
             ],
             [
                 'name' => 'Admin',
                 'email' => 'admin@example.com',
-                'password' => $adminPassword,
+                'password' => Hash::make($password), // Hash the password
                 'role' => 1, // Admin role
             ],
             [
                 'name' => 'Cashier',
                 'email' => 'cashier@example.com',
-                'password' => $cashierPassword,
+                'password' => Hash::make($password), // Hash the password
                 'role' => 0, // Cashier role
             ],
         ]);

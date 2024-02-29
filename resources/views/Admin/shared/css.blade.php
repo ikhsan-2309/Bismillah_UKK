@@ -16,6 +16,10 @@
     padding: 10px;
   }
 
+  table.table-sup td {
+    padding: 10px;
+  }
+
   .page-item.active .page-link {
     color: #fff !important;
   }
@@ -33,59 +37,60 @@
   }
 
   .loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  display: none;
-}
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: none;
+  }
 
-.dataTables_processing.loader {
-  display: block;
-}
+  .dataTables_processing.loader {
+    display: block;
+  }
 
-.loader .dot-opacity-loader {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
+  .loader .dot-opacity-loader {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
 
-.loader .dot-opacity-loader span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #333;
-  opacity: 0;
-  animation: dot-opacity 1.5s infinite ease-in-out;
-}
-
-.loader .dot-opacity-loader span:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.loader .dot-opacity-loader span:nth-child(2) {
-  animation-delay: 0.5s;
-}
-
-.loader .dot-opacity-loader span:nth-child(3) {
-  animation-delay: 1s;
-}
-
-@keyframes dot-opacity {
-  0% {
+  .loader .dot-opacity-loader span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #333;
     opacity: 0;
+    animation: dot-opacity 1.5s infinite ease-in-out;
   }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
 
+  .loader .dot-opacity-loader span:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .loader .dot-opacity-loader span:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+
+  .loader .dot-opacity-loader span:nth-child(3) {
+    animation-delay: 1s;
+  }
+
+  @keyframes dot-opacity {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
 </style>

@@ -33,7 +33,7 @@
                   <th>Member Name</th>
                   <th>Alamat</th>
                   <th>Telepon</th>
-                  <th width="5%">Action</th>
+                  <th class="text-center" width="5%"><i class="fa fa-cog"></i></th>
                 </thead>
               </table>
             </form>
@@ -83,7 +83,7 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="mt-3 d-flex justify-content-end">
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
             </div>
@@ -112,12 +112,14 @@
         columns: [{
             data: 'select_all',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center'
           },
           {
             data: 'DT_RowIndex',
             searchable: false,
-            sortable: false
+            sortable: false,
+            class: 'text-center'
           },
           {
             data: 'kode_member'
